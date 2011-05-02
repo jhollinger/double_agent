@@ -1,0 +1,38 @@
+- sym: :msie
+  regex: msie
+  members:
+    - sym: msie_6
+      regex: msie 6
+    - sym: msie_7
+      regex: msie 7
+    - sym: msie_8
+      regex: msie 8
+    - sym: msie_9
+      regex: msie 9
+
+- sym: :chromium
+  regex: chromium
+
+- sym: :chrome
+  regex: chrome
+
+- sym: :android
+  regex: android
+
+- sym: :safari
+  regex: safari
+
+- sym: :opera
+  regex: opera
+
+- sym: :firefox
+  regex: firefox
+  members:
+    - sym: firefox_2
+      regex: firefox/2
+    - sym: firefox_3
+      regex: firefox/3
+    - sym: firefox_4
+      regex: firefox/4
+    - sym: firefox_5
+      regex: firefox/5
