@@ -1,38 +1,50 @@
-- sym: :msie
-  regex: msie
-  members:
-    - sym: msie_6
-      regex: msie 6
-    - sym: msie_7
-      regex: msie 7
-    - sym: msie_8
-      regex: msie 8
-    - sym: msie_9
-      regex: msie 9
+# The ordering is very important; matches are performed in the specified order.
+# This allows for greatly simplified regexes.
 
-- sym: :chromium
-  regex: chromium
+- :family: Internet Explorer
+  :sym: :msie
+  :name: 'Internet Explorer %s'
+  :regex: 'msie \d+'
+  :version: '(?<=msie )[0-9]+'
 
-- sym: :chrome
-  regex: chrome
+- :family: Chromium
+  :sym: :chromium
+  :name: 'Chromium %s'
+  :regex: 'chromium/\d+'
+  :version: '(?<=chromium/)[0-9]+'
 
-- sym: :android
-  regex: android
+- :family: Chromium
+  :sym: :chrome
+  :name: 'Chrome %s'
+  :regex: 'chrome/\d+'
+  :version: '(?<=chrome/)[0-9]+'
 
-- sym: :safari
-  regex: safari
+- :family: Chromium
+  :sym: :android
+  :name: 'Android %s'
+  :regex: android
+  :version: '(?<=android )[0-9]+(\.[0-9]+)?'
 
-- sym: :opera
-  regex: opera
+- :family: Safari
+  :sym: :safari
+  :name: 'Safari %s'
+  :regex: safari
+  :version: '(?<=version/)[0-9]+'
 
-- sym: :firefox
-  regex: firefox
-  members:
-    - sym: firefox_2
-      regex: firefox/2
-    - sym: firefox_3
-      regex: firefox/3
-    - sym: firefox_4
-      regex: firefox/4
-    - sym: firefox_5
-      regex: firefox/5
+- :family: Opera
+  :sym: :opera
+  :name: 'Opera %s'
+  :regex: opera
+  :version: '(?<=version/)[0-9]+'
+
+- :family: Firefox
+  :sym: :firefox
+  :name: 'Firefox %s'
+  :regex: firefox
+  :version: '(?<=firefox/)[0-9]+'
+
+- :family: Unknown
+  :sym: :unknown
+  :name: Unknown
+  :regex: .+
+  :version: .+

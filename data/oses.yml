@@ -1,24 +1,49 @@
-- sym: :android
-  regex: android
+- :family: Android
+  :sym: :android
+  :name: Android
+  :regex: android
 
-- sym: :linux
-  regex: linux
-  members:
-    - sym: :ubuntu
-      regex: ubuntu
+- :family: GNU/Linux
+  :sym: :ubuntu
+  :name: Ubuntu
+  :regex: ubuntu
 
-- sym: :ios
-  regex: (iphone)|(ipad)
+- :family: GNU/Linux
+  :sym: :linux
+  :name: Linux
+  :regex: linux
 
-- sym: :osx
-  regex: macintosh
+- :family: iOS
+  :sym: :ios
+  :name: iOS
+  :regex: (iphone)|(ipad)
 
-- sym: :windows
-  regex: windows
-  members:
-    - sym: :windows_xp
-      regex: windows nt 5\.1
-    - sym: :windows_vista
-      regex: windows nt 6\.0
-    - sym: :windows_7
-      regex: windows nt 6\.1
+- :family: OS X
+  :sym: :osx
+  :name: OS X
+  :regex: macintosh
+
+- :family: Windows
+  :sym: :windows_xp
+  :name: Windows XP
+  :regex: windows nt 5\.1
+
+- :family: Windows
+  :sym: :windows_vista
+  :name: Windows Vista
+  :regex: windows nt 6\.0
+
+- :family: Windows
+  :sym: :windows_7
+  :name: Windows 7
+  :regex: windows nt 6\.1
+
+- :family: Windows
+  :sym: :windows
+  :name: Windows
+  :regex: windows
+
+- :family: Unknown
+  :sym: :unknown
+  :name: Unknown
+  :regex: .+

@@ -5,45 +5,37 @@ module DoubleAgent
   # 
   module Resource
     def browser_sym
-      _browser_sym
+      _browser_parser.sym
     end
 
     def browser
-      DoubleAgent.browser _browser_sym
-    end
-
-    def browser_family_sym
-      DoubleAgent.browser_family_sym _browser_sym
+      _browser_parser.browser
     end
 
     def browser_family
-      DoubleAgent.browser_family _browser_sym
+      _browser_parser.family
     end
 
     def os_sym
-      _os_sym
+      _os_parser.sym
     end
 
     def os
-      DoubleAgent.os _os_sym
-    end
-
-    def os_family_sym
-      DoubleAgent.os_family_sym _os_sym
+      _os_parser.os
     end
 
     def os_family
-      DoubleAgent.os_family _os_sym
+      _os_parser.family
     end
 
     private
 
-    def _browser_sym
-      @browser_sym ||= DoubleAgent.browser_sym user_agent
+    def _browser_parser
+      @browser_parser ||= DoubleAgent.browser_parser(user_agent)
     end
 
-    def _os_sym
-      @os_sym ||= DoubleAgent.os_sym user_agent
+    def _os_parser
+      @os_parser ||= DoubleAgent.os_parser(user_agent)
     end
   end
 end

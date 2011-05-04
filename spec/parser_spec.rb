@@ -7,16 +7,10 @@ describe DoubleAgent do
 
   context 'browser_sym' do
     it 'returns :firefox_4' do
-      DoubleAgent.browser_sym(@ua_string).should == :firefox_4
+      DoubleAgent.browser_sym(@ua_string).should == :firefox
     end
     it 'returns :unknown' do
       DoubleAgent.browser_sym('froofroo').should == :unknown
-    end
-  end
-
-  context 'browser_family_sym' do
-    it 'returns :firefox' do
-      DoubleAgent.browser_family_sym(@ua_string).should == :firefox
     end
   end
 
@@ -41,12 +35,6 @@ describe DoubleAgent do
     end
     it 'returns :unknown' do
       DoubleAgent.browser_sym('froofroo').should == :unknown
-    end
-  end
-
-  context 'os_family_sym' do
-    it 'returns :linux' do
-      DoubleAgent.os_family_sym(@ua_string).should == :linux
     end
   end
 
