@@ -1,10 +1,7 @@
 = Double Agent
 
-double_agent is a library for parsing browser and operating system names out of browser user 
-agent strings, specifically large numbers of them for review or analysis. You can use the 
-DoubleAgent module either stand-alone or with "Resources" (in Rails parlance). There are 
-helpers for parsing user agent strings from Apache and Nginx log files as well as helpers 
-for generating browser percentages for large numbers of Resources.
+double_agent is a library for parsing browser and operating system info out of user 
+agent strings. It is designed for parsing large sets at once for review or analysis.
 
 The DoubleAgent module consists of four components: core, resources, stats, and logs. You may
 load the default components (core, resources and stats) with:
@@ -49,17 +46,10 @@ The core parser.
     DoubleAgent.os_family_sym(ua_string)
     => :linux
 
-As you can see with the *_sym methods, each browser and OS has it's own unique symbol name/id.
-You may pass these to any of the above methods, instead of of a user agent string.
-
-    DoubleAgent.browser_family(:firefox_4)
-    => 'Firefox'
-
 = Resources
 
-Say you're saving a record of each user's login so you can determine their favorite browser.
-If your Login class has an instance user_agent method or attribute, you can include the Resource module 
-to get all the above browser and OS methods.
+Say you're saving a record of each user's login so you can determine their favorite browser. Just make sure
+the user agent is avilable through #user_agent, and presto!
 
     class Login
       include DoubleAgent::Resource
@@ -86,8 +76,8 @@ etc., or any combination of these.
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser)
-    stats.each do |percent, browser_sym|
-      puts "#{DoubleAgent.browser(browser_sym)} - #{percent}%"
+    stats.each do |browser, percent|
+      puts "#{browser} - #{percent}%"
     end
 
     Firefox 4 - 20%
@@ -98,8 +88,8 @@ etc., or any combination of these.
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser_family, :os_family)
-    stats.each do |percent, browser_sym, os_sym|
-      puts "#{DoubleAgent.browser_family(browser_sym)} on #{DoubleAgent.os_family(os_sym)} - #{percent}%"
+    stats.each do |browser_family, os_family, percent|
+      puts "#{browser_family} on #{os_family} - #{percent}%"
     end
 
     Firefox on Windows - 50%
