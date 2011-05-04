@@ -11,19 +11,34 @@ module DoubleAgent
   OSES = {}
 
   class BrowserParser
-    attr_reader :family, :sym
+    BLANK = ''
+    attr_reader :sym, :family_sym, :icon
 
     def initialize(attrs={})
-      @family = attrs[:family]
+      @family_sym = attrs[:family_sym]
       @name = attrs[:name]
       @sym = attrs[:sym]
-      #@regex = attrs[:regex]
+      @icon = attrs[:icon] || @sym
       @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
     end
 
-    def browser(ua)
-      @name % version(ua)
+    def browser(ua=nil)
+      if ua
+        @name % version(ua)
+      else
+        (@name % BLANK).rstrip
+      end
     end
+
+    def icon
+      @icon || @sym
+    end
+
+    def family
+      BROWSERS[family_sym]
+    end
+    
+    private
 
     def version(ua)
       ua.slice(@version)
@@ -31,12 +46,17 @@ module DoubleAgent
   end
 
   class OSParser
-    attr_reader :family, :os, :sym
+    attr_reader :os, :sym, :family_sym, :icon
 
     def initialize(attrs={})
-      @family = attrs[:family]
+      @family_sym = attrs[:family_sym]
       @os = attrs[:name]
       @sym = attrs[:sym]
+      @icon = attrs[:icon] || @sym
+    end
+
+    def family
+      OSES[family_sym]
     end
   end
 
@@ -48,24 +68,46 @@ module DoubleAgent
     browser_parser(ua).browser(ua)
   end
 
-  def self.browser_family(ua)
-    browser_parser(ua).family
+  def self.browser_sym(user_agent)
   end
 
   def self.browser_icon(ua)
-    browser_sym(ua)
+    browser_parser(ua).icon
+  end
+
+  def self.browser_family(ua)
+    browser_parser(ua).family.browser
+  end
+
+  def self.browser_family_sym(ua)
+    browser_parser(ua).family_sym
+  end
+
+  def self.browser_family_icon(ua)
+    browser_parser(ua).family.icon
   end
 
   def self.os(ua)
     os_parser(ua).os
   end
 
-  def self.os_family(ua)
-    os_parser(ua).family
+  def self.os_sym(user_agent)
   end
 
   def self.os_icon(ua)
-    os_sym(ua)
+    os_parser(ua).icon
+  end
+
+  def self.os_family(ua)
+    os_parser(ua).family.os
+  end
+
+  def self.os_family_sym(ua)
+    os_parser(ua).family_sym
+  end
+
+  def self.os_family_icon(ua)
+    os_parser(ua).family.icon
   end
 
   # Get a browser parser with either a user agent or symbol
@@ -76,12 +118,6 @@ module DoubleAgent
   # Get an OS parser with either a user agent or symbol
   def self.os_parser(ua_or_sym)
     OSES[ua_or_sym.is_a?(Symbol) ? ua_or_sym : os_sym(ua_or_sym)]
-  end
-
-  def self.browser_sym(user_agent)
-  end
-
-  def self.os_sym(user_agent)
   end
 
   def self.load_browsers!

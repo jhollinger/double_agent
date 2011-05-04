@@ -1,50 +1,50 @@
 # The ordering is very important; matches are performed in the specified order.
 # This allows for greatly simplified regexes.
 
-- :family: Internet Explorer
+- :name: Internet Explorer %s
   :sym: :msie
-  :name: 'Internet Explorer %s'
+  :family_sym: :msie
   :regex: 'msie \d+'
   :version: '(?<=msie )[0-9]+'
 
-- :family: Chromium
+- :name: Chromium %s
   :sym: :chromium
-  :name: 'Chromium %s'
+  :family_sym: :chromium
   :regex: 'chromium/\d+'
   :version: '(?<=chromium/)[0-9]+'
 
-- :family: Chromium
+- :name: Chrome %s
   :sym: :chrome
-  :name: 'Chrome %s'
+  :family_sym: :chromium
   :regex: 'chrome/\d+'
   :version: '(?<=chrome/)[0-9]+'
 
-- :family: Chromium
+- :name: Android %s
   :sym: :android
-  :name: 'Android %s'
+  :family_sym: :chromium
   :regex: android
   :version: '(?<=android )[0-9]+(\.[0-9]+)?'
 
-- :family: Safari
+- :name: Safari %s
   :sym: :safari
-  :name: 'Safari %s'
+  :family_sym: :safari
   :regex: safari
   :version: '(?<=version/)[0-9]+'
 
-- :family: Opera
+- :name: Opera %s
   :sym: :opera
-  :name: 'Opera %s'
+  :family_sym: :opera
   :regex: opera
   :version: '(?<=version/)[0-9]+'
 
-- :family: Firefox
+- :name: Firefox %s
   :sym: :firefox
-  :name: 'Firefox %s'
+  :family_sym: :firefox
   :regex: firefox
   :version: '(?<=firefox/)[0-9]+'
 
-- :family: Unknown
+- :name: Unknown
   :sym: :unknown
-  :name: Unknown
+  :family_sym: :unkown
   :regex: .+
   :version: .+
