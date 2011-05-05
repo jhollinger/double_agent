@@ -23,10 +23,16 @@
   :family_sym: :osx
   :regex: macintosh
 
-- :name: Windows XP
-  :sym: :windows_xp
+- :name: Windows 8
+  :sym: :windows_8
   :family_sym: :windows
-  :regex: windows nt 5\.1
+  :regex: windows nt 6\.2
+  :icon: windows
+
+- :name: Windows 7
+  :sym: :windows_7
+  :family_sym: :windows
+  :regex: windows nt 6\.1
   :icon: windows
 
 - :name: Windows Vista
@@ -35,10 +41,10 @@
   :regex: windows nt 6\.0
   :icon: windows
 
-- :name: Windows 7
-  :sym: :windows_7
+- :name: Windows XP
+  :sym: :windows_xp
   :family_sym: :windows
-  :regex: windows nt 6\.1
+  :regex: windows nt 5\.[12]
   :icon: windows
 
 - :name: Windows
