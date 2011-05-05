@@ -1,19 +1,18 @@
 = Double Agent
 
 double_agent is a library for parsing browser and operating system info out of user 
-agent strings. It is designed for parsing large sets at once for review or analysis.
+agent strings. It is designed for parsing large sets for review or analysis.
 
-The DoubleAgent module consists of four components: core, resources, stats, and logs. You may
-load the default components (core, resources and stats) with:
-
+    # Load core, resources and stats
     require 'double_agent'
 
-or require them individually:
+    # Load pieces individually
+    require 'double_agent/core'
+    require 'double_agent/resources'
+    require 'double_agent/stats'
+    require 'double_agent/logs'
 
-    require 'double_agent/<name>'
-
-Finally, you may require every possible component with:
-
+    # Load everything at once
     require 'double_agent/all'
 
 = Core
@@ -29,7 +28,7 @@ The core parser.
     => "Firefox"
 
     DoubleAgent.browser_sym(ua_string)
-    => :firefox_4
+    => :firefox
 
     DoubleAgent.browser_family_sym(ua_string)
     => :firefox
@@ -69,8 +68,7 @@ the user agent is avilable through #user_agent, and presto!
 
 = Stats
 
-Figure out what percent of DoubleAgent::Resource'd objects use which browser, browser family, os, 
-etc., or any combination of these.
+Figure out what percent use which browser, browser family, os, etc.
 
 == Example 1
 
@@ -99,10 +97,9 @@ etc., or any combination of these.
 
 = Logs
 
-double_agent/logs is an optional component you must require manually. It contains a
-simple DoubleAgent::LogEntry class representing one line in an Apache or Nginx access log, storing
-the user agent in its user_agent attr. As you might guess, it includes DoubleAgent::Resource, 
-so it has all the browser and os methods.
+DoubleAgent#log_entries parses through Apache and Nginx access logs, instantiating each log line into a LogEntry
+object. The LogEntry class mixes in DoubleAgent::Resource, so this is a great way to generate browser and 
+OS breakdowns of who's visiting your site.
 
     require 'double_agent'
     require 'double_agent/logs'
