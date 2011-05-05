@@ -12,6 +12,7 @@ module DoubleAgent
 
   class BrowserParser
     BLANK = ''
+    MIN_VERSION = '1.9.2'
     attr_reader :sym, :family_sym, :icon
 
     def initialize(attrs={})
@@ -19,7 +20,11 @@ module DoubleAgent
       @name = attrs[:name]
       @sym = attrs[:sym]
       @icon = attrs[:icon] || @sym
-      @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
+      if RUBY_VERSION < MIN_VERSION and attrs[:safe_version]
+        @safe_version = attrs[:safe_version].map { |r| Regexp.new r, Regexp::IGNORECASE }
+      else
+        @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
+      end
     end
 
     def browser(ua=nil)
@@ -41,7 +46,11 @@ module DoubleAgent
     private
 
     def version(ua)
-      ua.slice(@version)
+      if @safe_version and RUBY_VERSION < MIN_VERSION
+        ua.slice(@safe_version[0]).slice(@safe_version[1])
+      else
+        ua.slice(@version)
+      end
     end
   end
 

@@ -6,42 +6,49 @@
   :family_sym: :msie
   :regex: 'msie \d+'
   :version: '(?<=msie )[0-9]+'
+  :safe_version: ["msie [0-9]+", "[0-9]+"]
 
 - :name: Chromium %s
   :sym: :chromium
   :family_sym: :chromium
   :regex: 'chromium/\d+'
   :version: '(?<=chromium/)[0-9]+'
+  :safe_version: ["chromium/[0-9]+", "[0-9]+"]
 
 - :name: Chrome %s
   :sym: :chrome
   :family_sym: :chromium
   :regex: 'chrome/\d+'
   :version: '(?<=chrome/)[0-9]+'
+  :safe_version: ["chrome/[0-9]+", "[0-9]+"]
 
 - :name: Android %s
   :sym: :android
   :family_sym: :chromium
   :regex: android
   :version: '(?<=android )[0-9]+(\.[0-9]+)?'
+  :safe_version: ["android [0-9]+(\.[0-9]+)?", "[0-9]+(\.[0-9]+)?"]
 
 - :name: Safari %s
   :sym: :safari
   :family_sym: :safari
   :regex: safari
   :version: '(?<=version/)[0-9]+'
+  :safe_version: ["version/[0-9]+", "[0-9]+"]
 
 - :name: Opera %s
   :sym: :opera
   :family_sym: :opera
   :regex: opera
   :version: '(?<=version/)[0-9]+'
+  :safe_version: ["version/[0-9]+", "[0-9]+"]
 
 - :name: Firefox %s
   :sym: :firefox
   :family_sym: :firefox
   :regex: firefox
   :version: '(?<=firefox/)[0-9]+'
+  :safe_version: ["firefox/[0-9]+", "[0-9]+"]
 
 - :name: Unknown
   :sym: :unknown
