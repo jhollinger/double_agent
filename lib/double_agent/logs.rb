@@ -1,6 +1,11 @@
 require 'zlib'
 
 module DoubleAgent
+  # Accepts a glob path like /var/logs/apache/my-site.access.log*,
+  # parses all matching files into an array of LegEntry objects, and returns them.
+  #
+  # If a Regexp is passed as the second argument, lines which do not match
+  # it will be ignored.
   def self.log_entries(glob_str, regex=nil)
     entries, gz_regexp = [], /\.gz\Z/i
     Dir.glob(glob_str).each do |f|
@@ -13,6 +18,10 @@ module DoubleAgent
     end
     entries
   end
+
+  # This class represents a line in an Apache or Nginx access log.
+  # The user agent string is parsed out and available through the
+  # user_agent attribute, making it available to the mixed-in DoubleAgent::Resource.
 
   class LogEntry
     USER_AGENT_REGEXP = /[^"]+(?="$)/

@@ -11,7 +11,6 @@ module DoubleAgent
     end
   end
 
-  # 
   # For the given "things", returns the share of the group that each attr has.
   # 
   # "things" is an array of objects who's classes "include DoubleAgent::Resource".
@@ -27,7 +26,6 @@ module DoubleAgent
   # Example, Browser/OS share, asking for symbols back:
   # DoubleAgent.percentages_for(server_log_entries, :browser_sym, :os_sym)
   # => [[:firefox_4, :windows_7, 50.4], [:firefox_3, :osx, 19.6], [:msie, :windows_xp, 15], [:safari, :osx, 10], [:other, :other, 5]]
-  # 
   def self.percentages_for(things, *attrs)
     p = {}
     things.each do |h|

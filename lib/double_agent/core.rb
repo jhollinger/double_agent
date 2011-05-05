@@ -1,20 +1,21 @@
 require 'yaml'
 
 module DoubleAgent
-  # 
-  # Map browser/os ids to names, families and icons
-  # 
   BROWSER_DATA = YAML.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
   OS_DATA = YAML.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
 
   BROWSERS = {}
   OSES = {}
 
+  # Each "browser family" in BROWSER_DATA gets its own BrowserParser object. These 
+  # parser objects are then used to parse specific data out of a user agent string.
+
   class BrowserParser
     BLANK = ''
     MIN_VERSION = '1.9.2'
     attr_reader :sym, :family_sym, :icon
 
+    # Instantiate a new BrowserParser using a "browser family" element from BROWSER_DATA
     def initialize(attrs={})
       @family_sym = attrs[:family_sym]
       @name = attrs[:name]
@@ -27,6 +28,8 @@ module DoubleAgent
       end
     end
 
+    # Returns the browser's name. If you provide an user agent string as an argument,
+    # it will attempt to also return the major version number. E.g. "Firefox 4".
     def browser(ua=nil)
       if ua
         @name % version(ua)
@@ -35,16 +38,23 @@ module DoubleAgent
       end
     end
 
+    # Returns the name of the icon file, e.g. 'firefox'. (You will need to supply your 
+    # own icons.)
     def icon
       @icon || @sym
     end
 
+    # Returns the BrowserParser for this BrowserParser object's Family. E.g. the Chrome 
+    # BrowserParser would return the Chromium BrowserParser. For browsers that are their 
+    # own family (e.g. Firefox, IE) it will end up returning itself.
     def family
       BROWSERS[family_sym]
     end
     
     private
 
+    # Attempts to parse and return the browser's version from a user agent string. Returns
+    # nil if nothing is found.
     def version(ua)
       if @safe_version and RUBY_VERSION < MIN_VERSION
         ua.slice(@safe_version[0]).slice(@safe_version[1])
@@ -54,9 +64,14 @@ module DoubleAgent
     end
   end
 
+  # Each "OS" in OS_DATA gets its own OSParser object. In theory, these parser
+  # objects can then be used to grab further info from user agent strings, though
+  # that is not currently happening.
+
   class OSParser
     attr_reader :os, :sym, :family_sym, :icon
 
+    # Instantiate a new OSParser using an "OS family" element from OS_DATA
     def initialize(attrs={})
       @family_sym = attrs[:family_sym]
       @os = attrs[:name]
@@ -64,6 +79,9 @@ module DoubleAgent
       @icon = attrs[:icon] || @sym
     end
 
+    # Returns the OSParser for this OSParser object's Family. E.g. the Ubuntu
+    # OSParser would return the GNU/Linux OSerParser. For OSes that are their own
+    # family (e.g. OS X) it will end up returning itself.
     def family
       OSES[family_sym]
     end
@@ -73,62 +91,78 @@ module DoubleAgent
   # Methods for getting browser/os names, families, and icons either by passing a user agent string.
   # 
 
+  # Returns the browser's name, possibly including the version number, e.g. "Chrome 12"
   def self.browser(ua)
     browser_parser(ua).browser(ua)
   end
 
+  # Returns the browser's symbol name, e.g. :chrome
   def self.browser_sym(user_agent)
+    # This method is overwitten by load_browsers!
   end
 
+  # Returns the browser's icon name, e.g. :chrome
   def self.browser_icon(ua)
     browser_parser(ua).icon
   end
 
+  # Returns the browser's family name, e.g. "Chromium"
   def self.browser_family(ua)
     browser_parser(ua).family.browser
   end
 
+  # Returns the browser's family's symbol name, e.g. :chromium
   def self.browser_family_sym(ua)
     browser_parser(ua).family_sym
   end
 
+  # Returns the browser's family's icon name, e.g. :chromium
   def self.browser_family_icon(ua)
     browser_parser(ua).family.icon
   end
 
+  # Returns the OS's name, e.g. "Ubuntu"
   def self.os(ua)
     os_parser(ua).os
   end
 
+  # Returns the OS's symbol name, e.g. :ubuntu
   def self.os_sym(user_agent)
+    # This method is overwitten by load_oses!
   end
 
+  # Returns the OS's icon name, e.g. :ubuntu
   def self.os_icon(ua)
     os_parser(ua).icon
   end
 
+  # Returns the OS's family, e.g. "GNU/Linux"
   def self.os_family(ua)
     os_parser(ua).family.os
   end
 
+  # Returns the OS's family's symbol name, e.g. :linux
   def self.os_family_sym(ua)
     os_parser(ua).family_sym
   end
 
+  # Returns the OS's family's symbol icon, e.g. :linux
   def self.os_family_icon(ua)
     os_parser(ua).family.icon
   end
 
-  # Get a browser parser with either a user agent or symbol
+  # Returns the correct BrowerParser for the given user agent or symbol
   def self.browser_parser(ua_or_sym)
     BROWSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : browser_sym(ua_or_sym)]
   end
 
-  # Get an OS parser with either a user agent or symbol
+  # Returns the correct OSParser for the given user agent or symbol
   def self.os_parser(ua_or_sym)
     OSES[ua_or_sym.is_a?(Symbol) ? ua_or_sym : os_sym(ua_or_sym)]
   end
 
+  # Parses BROWSER_DATA into BROWSERS, a hash of BrowserParser objects indexed by their symbol names.
+  # Parses and evals BROWSER_DATA into a case statement inside of the browser_sym method.
   def self.load_browsers!
     BROWSERS.clear
     str = "case user_agent\n"
@@ -140,6 +174,8 @@ module DoubleAgent
     module_eval "def self.browser_sym(user_agent); #{str}; end"
   end
 
+  # Parses OS_DATA into OSES, a hash of OSParser objects indexed by their symbol names.
+  # Parses and evals OS_DATA into a case statement inside of the os_sym method.
   def self.load_oses!
     OSES.clear
     str = "case user_agent\n"
