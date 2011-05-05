@@ -1,3 +1,5 @@
+require 'zlib'
+
 module DoubleAgent
   def self.log_entries(glob_str, regex=nil)
     entries, gz_regexp = [], /\.gz\Z/i

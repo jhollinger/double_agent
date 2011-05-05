@@ -1,55 +1,81 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe DoubleAgent do
-  before do
-    @ua_string = 'Mozilla/5.0 (X11; Ubuntu Linux i686; rv:2.0) Gecko/20100101 Firefox/4.0'
-  end
-
-  context 'browser_sym' do
-    it 'returns :firefox_4' do
-      DoubleAgent.browser_sym(@ua_string).should == :firefox
+  context 'Core' do
+    before do
+      @ua_string = 'Mozilla/5.0 (X11; Ubuntu Linux i686; rv:2.0) Gecko/20100101 Firefox/4.0'
     end
-    it 'returns :unknown' do
-      DoubleAgent.browser_sym('froofroo').should == :unknown
-    end
-  end
 
-  context 'browser' do
-    it 'returns Firefox 4' do
+    #browser
+    it 'returns Firefox 4 for browser' do
       DoubleAgent.browser(@ua_string).should == 'Firefox 4'
     end
-    it 'returns Unknown' do
+    it 'returns Unknown for browser' do
       DoubleAgent.browser('froofroo').should == 'Unknown'
     end
-  end
 
-  context 'browser_family' do
-    it 'returns Firefox' do
-      DoubleAgent.browser_family(@ua_string).should == 'Firefox'
+    #browser_sym
+    it 'returns :firefox for browser_sym' do
+      DoubleAgent.browser_sym(@ua_string).should == :firefox
     end
-  end
-
-  context 'os_sym' do
-    it 'returns :ubuntu' do
-      DoubleAgent.os_sym(@ua_string).should == :ubuntu
-    end
-    it 'returns :unknown' do
+    it 'returns :unknown for browser_sym' do
       DoubleAgent.browser_sym('froofroo').should == :unknown
     end
-  end
 
-  context 'os' do
-    it 'returns Ubuntu' do
+    #browser_family
+    it 'returns Firefox for browser family' do
+      DoubleAgent.browser_family(@ua_string).should == 'Firefox'
+    end
+
+    #browser_family_sym
+    it 'returns :firefox for browser_family_sym' do
+      DoubleAgent.browser_family_sym(@ua_string).should == :firefox
+    end
+
+    #browser_icon
+    it 'returns :firefox for browser_sym' do
+      DoubleAgent.browser_icon(@ua_string).should == :firefox
+    end
+
+    #browser_family_icon
+    it 'returns :firefox for browser_family_sym' do
+      DoubleAgent.browser_family_icon(@ua_string).should == :firefox
+    end
+
+    #os
+    it 'returns Ubuntua for OS' do
       DoubleAgent.os(@ua_string).should == 'Ubuntu'
     end
-    it 'returns Unknown' do
+    it 'returns Unknowna for OS' do
       DoubleAgent.os('froofroo').should == 'Unknown'
     end
-  end
 
-  context 'os_family' do
-    it 'returns GNU/Linux' do
+    #os_sym
+    it 'returns :ubuntu for os_sym' do
+      DoubleAgent.os_sym(@ua_string).should == :ubuntu
+    end
+    it 'returns :unknown for os_sym' do
+      DoubleAgent.os_sym('froofroo').should == :unknown
+    end
+
+    #os_family
+    it 'returns GNU/Linux OS family' do
       DoubleAgent.os_family(@ua_string).should == 'GNU/Linux'
+    end
+
+    #os_family_sym
+    it 'returns :linux for os_family_sym' do
+      DoubleAgent.os_family_sym(@ua_string).should == :linux
+    end
+
+    #os_icon
+    it 'returns :ubuntu for os_sym' do
+      DoubleAgent.os_icon(@ua_string).should == :ubuntu
+    end
+
+    #os_family_icon
+    it 'returns :linux for os_family_sym' do
+      DoubleAgent.os_family_icon(@ua_string).should == :linux
     end
   end
 end

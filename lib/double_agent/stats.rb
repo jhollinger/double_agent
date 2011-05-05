@@ -1,4 +1,16 @@
+# Time for some monkey patching!
+
 module DoubleAgent
+  BAD_RUBY = RUBY_VERSION < '1.9.0'
+
+  if BAD_RUBY
+    require 'bigdecimal'
+    def self.better_round(f, n)
+      d = BigDecimal.new f.to_s
+      d.round(n).to_f
+    end
+  end
+
   # 
   # For the given "things", returns the share of the group that each attr has.
   # 
@@ -24,6 +36,13 @@ module DoubleAgent
       p[syms] += 1
     end
     size = things.size.to_f
-    p.to_a.collect { |k,n| [*k.<<((n * 100) / size)] }.sort { |a,b| b.last <=> a.last }
+    p = p.to_a
+    if BAD_RUBY
+      p.collect! { |k,n| [*k.<<(better_round(((n * 100) / size), 2))] }
+    else
+      p.collect! { |k,n| [*k.<<(((n * 100) / size).round(2))] }
+    end
+    p.sort! { |a,b| b.last <=> a.last }
+    p
   end
 end
