@@ -37,7 +37,7 @@ module DoubleAgent
     # Returns the browser's name. If you provide an user agent string as an argument,
     # it will attempt to also return the major version number. E.g. "Firefox 4".
     def browser(ua=nil)
-      if ua and @version
+      if ua and (@version or @safe_version)
         @name % version(ua)
       else
         (@name % BLANK).rstrip

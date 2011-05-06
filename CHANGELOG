@@ -1,4 +1,8 @@
-** Release 0.0.2 (May 6, 2011) **
+== Release 0.0.3 (May 6, 2011)
+
+* Fixed bug from 0.0.2 in Ruby 1.8 where browser versions never got parsed
+
+== Release 0.0.2 (May 6, 2011)
 
 * Fixed detection for some versions of Windows XP and Opera
 
@@ -8,6 +12,6 @@
 
 * Misc. minor internal refactoring and bug fixes
 
-** Release 0.0.1 (April 30, 2011) **
+== Release 0.0.1 (April 30, 2011) **
 
 * Initial release
