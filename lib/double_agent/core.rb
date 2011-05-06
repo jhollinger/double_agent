@@ -1,13 +1,19 @@
 require 'yaml'
 
 module DoubleAgent
+  # An array of "browser knowledge hashes," the basis of browser parsing. You may edit this data and call load_browsers! to customize parsing.
   BROWSER_DATA = YAML.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
+
+  # An array of "OS knowledge hashes," the basis of OS parsing. You may edit this data and call load_oses! to customize parsing.
   OS_DATA = YAML.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
 
+  # An array of BrowserParser objects created from the data in BROWSER_DATA.
   BROWSERS = {}
+
+  # An array of OSParser objects created from the data in OS_DATA.
   OSES = {}
 
-  # Each "browser family" in BROWSER_DATA gets its own BrowserParser object. These 
+  # Each browser in BROWSER_DATA gets its own BrowserParser object. These 
   # parser objects are then used to parse specific data out of a user agent string.
 
   class BrowserParser
@@ -38,12 +44,6 @@ module DoubleAgent
       end
     end
 
-    # Returns the name of the icon file, e.g. 'firefox'. (You will need to supply your 
-    # own icons.)
-    def icon
-      @icon || @sym
-    end
-
     # Returns the BrowserParser for this BrowserParser object's Family. E.g. the Chrome 
     # BrowserParser would return the Chromium BrowserParser. For browsers that are their 
     # own family (e.g. Firefox, IE) it will end up returning itself.
@@ -64,7 +64,7 @@ module DoubleAgent
     end
   end
 
-  # Each "OS" in OS_DATA gets its own OSParser object. In theory, these parser
+  # Each OS in OS_DATA gets its own OSParser object. In theory, these parser
   # objects can then be used to grab further info from user agent strings, though
   # that is not currently happening.
 
@@ -86,10 +86,6 @@ module DoubleAgent
       OSES[family_sym]
     end
   end
-
-  # 
-  # Methods for getting browser/os names, families, and icons either by passing a user agent string.
-  # 
 
   # Returns the browser's name, possibly including the version number, e.g. "Chrome 12"
   def self.browser(ua)

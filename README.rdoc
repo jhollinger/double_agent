@@ -48,7 +48,7 @@ The core parser.
 = Resources
 
 Say you're saving a record of each user's login so you can determine their favorite browser. Just make sure
-the user agent is avilable through #user_agent, and presto!
+the user agent is available through user_agent, and presto!
 
     class Login
       include DoubleAgent::Resource
@@ -74,32 +74,31 @@ Figure out what percent use which browser, browser family, os, etc.
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser)
+
+    p stats
+    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
+
     stats.each do |browser, percent|
       puts "#{browser} - #{percent}%"
     end
-
-    Firefox 4 - 20%
-    Internet Explorer 8 - 18%
-    ...
 
 == Example 2
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser_family, :os_family)
+
+    p stats
+    => [["Firefox", "Windows", 50.0], ["Internet Explorer", "Windows", 20.0], ["Safari", "OS X", 20.0], ["Firefox", "GNU/Linux", 10.0]]
+
     stats.each do |browser_family, os_family, percent|
       puts "#{browser_family} on #{os_family} - #{percent}%"
     end
 
-    Firefox on Windows - 50%
-    Internet Explorer on Window - 20%
-    Safari on OS X - 20%
-    Firefox on GNU/Linux - 10%
-
 = Logs
 
 DoubleAgent#log_entries parses through Apache and Nginx access logs, instantiating each log line into a LogEntry
-object. The LogEntry class mixes in DoubleAgent::Resource, so this is a great way to generate browser and 
-OS breakdowns of who's visiting your site.
+object. It even reads gzipped logs (requires zlib)! The LogEntry class mixes in DoubleAgent::Resource, so this is
+a great way to generate browser and OS breakdowns of who's visiting your site.
 
     require 'double_agent'
     require 'double_agent/logs'

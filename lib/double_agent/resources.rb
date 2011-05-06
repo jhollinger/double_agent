@@ -1,6 +1,6 @@
 module DoubleAgent
   # 
-  # Any class with a "user_agent" method which returns a User Agent string
+  # Any class with a "user_agent" method returning a User Agent string
   # may include this module to easily parse out Browser and OS info.
   # 
   module Resource

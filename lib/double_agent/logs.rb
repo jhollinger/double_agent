@@ -24,11 +24,15 @@ module DoubleAgent
   # user_agent attribute, making it available to the mixed-in DoubleAgent::Resource.
 
   class LogEntry
+    # Regular expression for pulling a user agent string out of a log entry
     USER_AGENT_REGEXP = /[^"]+(?="$)/
     include DoubleAgent::Resource
 
+    # Returns the user agent string
     attr_reader :user_agent
 
+    # Initializes a new LogEntry object. An Apache or Nginx log line should be
+    # passed to it.
     def initialize(line)
       #@line = line
       @user_agent = line.slice(USER_AGENT_REGEXP)
