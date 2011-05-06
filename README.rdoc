@@ -3,35 +3,32 @@
 double_agent is a library for parsing browser and operating system info out of user 
 agent strings. It is designed for parsing large sets for review or analysis.
 
-    # Load core, resources and stats
+== Installation
+
+    gem install double_agent
+
+== Loading
+
+Double Agent is broken up into four components - core, resources, stats, logs
+
+    # Load the default components (core, resources and stats)
     require 'double_agent'
 
-    # Load pieces individually
-    require 'double_agent/core'
-    require 'double_agent/resources'
-    require 'double_agent/stats'
-    require 'double_agent/logs'
+    # Load components individually (some have dependencies on others)
+    require 'double_agent/core|resources|stats|logs'
 
-    # Load everything at once
+    # Load everything
     require 'double_agent/all'
 
-= Core
-
-The core parser.
+= The Core Parser
 
     ua_string = "pretent I'm a user agent string for Firefox 4 on Ubuntu"
 
     DoubleAgent.browser(ua_string)
-    => "Firefox 4"
+    => "Chrome 11"
 
     DoubleAgent.browser_family(ua_string)
-    => "Firefox"
-
-    DoubleAgent.browser_sym(ua_string)
-    => :firefox
-
-    DoubleAgent.browser_family_sym(ua_string)
-    => :firefox
+    => "Chromium"
 
     DoubleAgent.os(ua_string)
     => "Ubuntu"
@@ -39,22 +36,18 @@ The core parser.
     DoubleAgent.os_family(ua_string)
     => "GNU/Linux"
 
-    DoubleAgent.os_sym(ua_string)
-    => :ubuntu
-
-    DoubleAgent.os_family_sym(ua_string)
-    => :linux
+See the DoubleAgent module for more.
 
 = Resources
 
-Say you're saving a record of each user's login so you can determine their favorite browser. Just make sure
-the user agent is available through user_agent, and presto!
+DoubleAgent::Resource is a mix-in for objects with a user_agent method or attribute.
+It gives that class's objects all of the above methods.
 
     class Login
       include DoubleAgent::Resource
 
       def user_agent
-        #returns this object's user agent string
+        #returns the user agent string the user logged in with
       end
     end
 
@@ -68,21 +61,7 @@ the user agent is available through user_agent, and presto!
 
 = Stats
 
-Figure out what percent use which browser, browser family, os, etc.
-
-== Example 1
-
-    logins = Login.all
-    stats = DoubleAgent.percentages_for(logins, :browser)
-
-    p stats
-    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
-
-    stats.each do |browser, percent|
-      puts "#{browser} - #{percent}%"
-    end
-
-== Example 2
+Calculate browser and OS shares for large sets of DoubleAgent::Resource objects.
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser_family, :os_family)
@@ -96,23 +75,15 @@ Figure out what percent use which browser, browser family, os, etc.
 
 = Logs
 
-DoubleAgent#log_entries parses through Apache and Nginx access logs, instantiating each log line into a LogEntry
-object. It even reads gzipped logs (requires zlib)! The LogEntry class mixes in DoubleAgent::Resource, so this is
-a great way to generate browser and OS breakdowns of who's visiting your site.
+DoubleAgent::log_entries parses through Apache and Nginx access logs, instantiating each log line into a DoubleAgent::LogEntry
+object. It even reads gzipped logs (requires zlib)! Since the DoubleAgent::LogEntry class mixes in DoubleAgent::Resource, you
+can easily calculate browser and/or OS market share on your site.
 
     require 'double_agent'
     require 'double_agent/logs'
 
     entries = DoubleAgent.log_entries("/var/log/nginx/my-site.access.log*")
-    entries.each do |entry|
-      puts entry.browser
-    end
+    stats = DoubleAgent.percentages_for(entries, :browser)
 
-    Firefox 3
-    Internet Explorer 8
-    Internet Explorer 9
-    Firefox 4
-    Internet Explorer
-    Safari
-    Chrome
-    ...
+    p stats
+    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
