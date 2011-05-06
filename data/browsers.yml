@@ -3,17 +3,9 @@
 
 - :name: Internet Explorer %s
   :sym: :msie
-  :family_sym: :msie
   :regex: 'msie \d+'
   :version: '(?<=msie )[0-9]+'
   :safe_version: ["msie [0-9]+", "[0-9]+"]
-
-- :name: Chromium %s
-  :sym: :chromium
-  :family_sym: :chromium
-  :regex: 'chromium/\d+'
-  :version: '(?<=chromium/)[0-9]+'
-  :safe_version: ["chromium/[0-9]+", "[0-9]+"]
 
 - :name: Chrome %s
   :sym: :chrome
@@ -22,6 +14,12 @@
   :version: '(?<=chrome/)[0-9]+'
   :safe_version: ["chrome/[0-9]+", "[0-9]+"]
 
+- :name: Chromium %s
+  :sym: :chromium
+  :regex: 'chromium/\d+'
+  :version: '(?<=chromium/)[0-9]+'
+  :safe_version: ["chromium/[0-9]+", "[0-9]+"]
+
 - :name: Android %s
   :sym: :android
   :family_sym: :chromium
@@ -29,29 +27,39 @@
   :version: '(?<=android )[0-9]+(\.[0-9]+)?'
   :safe_version: ["android [0-9]+(\.[0-9]+)?", "[0-9]+(\.[0-9]+)?"]
 
+- :name: BlackBerry
+  :sym: :blackberry
+  :regex: blackberry
+
+- :name: Epiphany
+  :sym: :epiphany
+  :regex: epiphany
+  :version: '(?<=epiphany/)[0-9]+'
+  :safe_version: ["epiphany/[0-9]+", "[0-9]+"]
+
 - :name: Safari %s
   :sym: :safari
-  :family_sym: :safari
   :regex: safari
   :version: '(?<=version/)[0-9]+'
   :safe_version: ["version/[0-9]+", "[0-9]+"]
 
 - :name: Opera %s
   :sym: :opera
-  :family_sym: :opera
   :regex: opera
   :version: '((?<=version/)[0-9]+)|((?<=opera )[0-9]+)'
   :safe_version: ["(version/[0-9]+)|(opera [0-9]+)", "[0-9]+"]
 
+- :name: Konqueror
+  :sym: :konqueror
+  :regex: konqueror
+
 - :name: Firefox %s
   :sym: :firefox
-  :family_sym: :firefox
   :regex: firefox
   :version: '(?<=firefox/)[0-9]+'
   :safe_version: ["firefox/[0-9]+", "[0-9]+"]
 
 - :name: Unknown
   :sym: :unknown
-  :family_sym: :unkown
   :regex: .+
   :version: .+

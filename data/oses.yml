@@ -8,10 +8,23 @@
   :family_sym: :linux
   :regex: ubuntu
 
+- :name: Fedora
+  :sym: :fedora
+  :family_sym: :linux
+  :regex: fedora
+
+- :name: Slackware
+  :sym: :slackware
+  :family_sym: :linux
+  :regex: slackware
+
 - :name: GNU/Linux
   :sym: :linux
-  :family_sym: :linux
   :regex: linux
+
+- :name: FreeBSD
+  :sym: :freebsd
+  :regex: freebsd
 
 - :name: iOS
   :sym: :ios
@@ -20,7 +33,6 @@
 
 - :name: OS X
   :sym: :osx
-  :family_sym: :osx
   :regex: macintosh
 
 - :name: Windows 8
@@ -49,10 +61,12 @@
 
 - :name: Windows
   :sym: :windows
-  :family_sym: :windows
   :regex: windows
 
-- :family: Unknown
+- :name: BlackBerry
+  :sym: :blackberry
+  :regex: blackberry
+
+- :name: Unknown
   :sym: :unknown
-  :name: Unknown
   :regex: .+
