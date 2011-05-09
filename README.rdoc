@@ -22,7 +22,7 @@ Double Agent is broken up into four components - core, resources, stats, logs
 
 = The Core Parser
 
-    ua_string = "pretent I'm a user agent string for Firefox 4 on Ubuntu"
+    ua_string = "pretent I'm a user agent string for Chrome on Ubuntu"
 
     DoubleAgent.browser(ua_string)
     => "Chrome 11"
