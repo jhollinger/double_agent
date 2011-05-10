@@ -7,19 +7,15 @@ module DoubleAgent
   # options[:match] and options[:ignore] can each take a regular expression,
   # ignoring lines that do and don't match, respectively.
   def self.log_entries(glob_str, options={})
-    entries, gz_regexp = [], /\.gz\Z/i
+    gz_regexp = /\.gz\Z/i
+    entries = []
+    parse = (options[:match] or options[:ignore]) \
+      ? lambda { |line| entries << LogEntry.new(line) if (options[:match].nil? or line =~ options[:match]) and (options[:ignore].nil? or line !~ options[:ignore]) } \
+      : lambda { |line| entries << LogEntry.new(line) }
     Dir.glob(glob_str).each do |f|
       File.open(f) do |file|
         handle = f =~ gz_regexp ? Zlib::GzipReader.new(file) : file
-        if options[:match] or options[:ignore]
-          while ( line = handle.gets )
-            entries << LogEntry.new(line) if (options[:match].nil? or line =~ options[:match]) and (options[:ignore].nil? or line !~ options[:ignore])
-          end
-        else
-          while ( line = handle.gets )
-            entries << LogEntry.new(line)
-          end
-        end
+        handle.each &parse
       end
     end
     entries

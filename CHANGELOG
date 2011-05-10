@@ -2,7 +2,9 @@
 
 * #log_entries takes :match and :ignore regexp options
 
-* Minor performance improvements
+* Added :threshold option to #percentages_for
+
+* Minor performance improvements to parsing and log reading
 
 == Release 0.0.3 (May 6, 2011)
 

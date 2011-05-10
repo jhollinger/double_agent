@@ -15,12 +15,23 @@ describe DoubleAgent do
   end
 
   context 'Stats' do
-    stats = DoubleAgent.percentages_for entries, :browser_family, :os_family
-    answer = [["Internet Explorer", "Windows", 42.55],
-              ["Chromium", "GNU/Linux", 40.43],
-              ["Firefox", "GNU/Linux", 10.64],
-              ["Firefox", "OS X", 4.26],
-              ["Safari", "OS X", 2.13]]
-    stats.should == answer
+    it 'should calculate stats' do
+      stats = DoubleAgent.percentages_for entries, :browser_family, :os_family
+      answer = [["Internet Explorer", "Windows", 42.55],
+                ["Chromium", "GNU/Linux", 40.43],
+                ["Firefox", "GNU/Linux", 10.64],
+                ["Firefox", "OS X", 4.26],
+                ["Safari", "OS X", 2.13]]
+      stats.should == answer
+    end
+
+    it 'should ignore stats below the threshold' do
+      stats = DoubleAgent.percentages_for entries, :browser_family, :os_family, :threshold => 3.0
+      answer = [["Internet Explorer", "Windows", 42.55],
+                ["Chromium", "GNU/Linux", 40.43],
+                ["Firefox", "GNU/Linux", 10.64],
+                ["Firefox", "OS X", 4.26]]
+      stats.should == answer
+    end
   end
 end
