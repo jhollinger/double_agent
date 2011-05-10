@@ -12,8 +12,11 @@ module DoubleAgent
   end
 
   # For the given "things", returns the share of the group that each attr has.
+  # 
   # "things" is an array of objects who's classes "include DoubleAgent::Resource".
+  # 
   # "args" is one or more method symbols from DoubleAgent::Resource.
+  # 
   # "args" may have, as it's last member, :threshold => n, where n is the lowest
   # percentage you want returned.
   # 

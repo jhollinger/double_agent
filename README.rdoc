@@ -61,7 +61,7 @@ It gives that class's objects all of the above methods.
 
 = Stats
 
-Calculate browser and OS shares for large sets of DoubleAgent::Resource objects.
+Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::percentages_for.
 
     logins = Login.all
     stats = DoubleAgent.percentages_for(logins, :browser_family, :os_family)
