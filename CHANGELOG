@@ -1,10 +1,12 @@
-== Release 0.1.0 (May 10, 2011)
+== Release 0.1.1 (May 10, 2011)
 
 * #log_entries takes :match and :ignore regexp options
 
 * Added :threshold option to #percentages_for
 
-* Minor performance improvements to parsing and log reading
+* Massive performance improvements to log parsing
+
+* Minor performance improvements to user agent parsing
 
 == Release 0.0.3 (May 6, 2011)
 

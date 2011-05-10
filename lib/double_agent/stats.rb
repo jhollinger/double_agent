@@ -32,7 +32,7 @@ module DoubleAgent
     p = {}
     things.each do |h|
       syms = args.map { |attr| h.send attr }
-      p[syms] = 0 unless p.has_key? syms
+      p[syms] ||= 0
       p[syms] += 1
     end
     size = things.size.to_f

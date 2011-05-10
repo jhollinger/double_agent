@@ -13,9 +13,9 @@ module DoubleAgent
       ? lambda { |line| entries << LogEntry.new(line) if (options[:match].nil? or line =~ options[:match]) and (options[:ignore].nil? or line !~ options[:ignore]) } \
       : lambda { |line| entries << LogEntry.new(line) }
     Dir.glob(glob_str).each do |f|
-      File.open(f) do |file|
+      File.open(f, 'r') do |file|
         handle = f =~ gz_regexp ? Zlib::GzipReader.new(file) : file
-        handle.each &parse
+        handle.readlines.each &parse
       end
     end
     entries
@@ -27,7 +27,7 @@ module DoubleAgent
 
   class LogEntry
     # Regular expression for pulling a user agent string out of a log entry
-    USER_AGENT_REGEXP = /[^"]+(?="$)/
+    USER_AGENT_REGEXP = /" ".+$/
     include DoubleAgent::Resource 
     # Returns the user agent string
     attr_reader :user_agent
@@ -35,7 +35,6 @@ module DoubleAgent
     # Initializes a new LogEntry object. An Apache or Nginx log line should be
     # passed to it.
     def initialize(line)
-      #@line = line
       @user_agent = line.slice(USER_AGENT_REGEXP)
     end
   end
