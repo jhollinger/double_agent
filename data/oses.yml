@@ -1,40 +1,3 @@
-- :name: Android
-  :sym: :android
-  :family_sym: :linux
-  :regex: android
-
-- :name: Ubuntu
-  :sym: :ubuntu
-  :family_sym: :linux
-  :regex: ubuntu
-
-- :name: Fedora
-  :sym: :fedora
-  :family_sym: :linux
-  :regex: fedora
-
-- :name: Slackware
-  :sym: :slackware
-  :family_sym: :linux
-  :regex: slackware
-
-- :name: GNU/Linux
-  :sym: :linux
-  :regex: linux
-
-- :name: FreeBSD
-  :sym: :freebsd
-  :regex: freebsd
-
-- :name: iOS
-  :sym: :ios
-  :family_sym: :osx
-  :regex: (iphone)|(ipad)
-
-- :name: OS X
-  :sym: :osx
-  :regex: macintosh
-
 - :name: Windows 8
   :sym: :windows_8
   :family_sym: :windows
@@ -62,6 +25,43 @@
 - :name: Windows
   :sym: :windows
   :regex: windows
+
+- :name: iOS
+  :sym: :ios
+  :family_sym: :osx
+  :regex: (iphone)|(ipad)
+
+- :name: OS X
+  :sym: :osx
+  :regex: macintosh
+
+- :name: Android
+  :sym: :android
+  :family_sym: :linux
+  :regex: android
+
+- :name: Ubuntu
+  :sym: :ubuntu
+  :family_sym: :linux
+  :regex: ubuntu
+
+- :name: Fedora
+  :sym: :fedora
+  :family_sym: :linux
+  :regex: fedora
+
+- :name: Slackware
+  :sym: :slackware
+  :family_sym: :linux
+  :regex: slackware
+
+- :name: GNU/Linux
+  :sym: :linux
+  :regex: linux
+
+- :name: FreeBSD
+  :sym: :freebsd
+  :regex: freebsd
 
 - :name: BlackBerry
   :sym: :blackberry

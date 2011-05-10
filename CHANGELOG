@@ -1,6 +1,8 @@
-== Release ?
+== Release 0.1.0 (May 10, 2011)
 
 * #log_entries takes :match and :ignore regexp options
+
+* Minor performance improvements
 
 == Release 0.0.3 (May 6, 2011)
 
