@@ -4,15 +4,21 @@ module DoubleAgent
   # Accepts a glob path like /var/logs/apache/my-site.access.log*,
   # parses all matching files into an array of LegEntry objects, and returns them.
   #
-  # If a Regexp is passed as the second argument, lines which do not match
-  # it will be ignored.
-  def self.log_entries(glob_str, regex=nil)
+  # options[:match] and options[:ignore] can each take a regular expression,
+  # ignoring lines that do and don't match, respectively.
+  def self.log_entries(glob_str, options={})
     entries, gz_regexp = [], /\.gz\Z/i
     Dir.glob(glob_str).each do |f|
       File.open(f) do |file|
         handle = f =~ gz_regexp ? Zlib::GzipReader.new(file) : file
-        while ( line = handle.gets )
-          entries << LogEntry.new(line) if regex.nil? or line =~ regex
+        if options[:match] or options[:ignore]
+          while ( line = handle.gets )
+            entries << LogEntry.new(line) if (options[:match].nil? or line =~ options[:match]) and (options[:ignore].nil? or line !~ options[:ignore])
+          end
+        else
+          while ( line = handle.gets )
+            entries << LogEntry.new(line)
+          end
         end
       end
     end
@@ -26,8 +32,7 @@ module DoubleAgent
   class LogEntry
     # Regular expression for pulling a user agent string out of a log entry
     USER_AGENT_REGEXP = /[^"]+(?="$)/
-    include DoubleAgent::Resource
-
+    include DoubleAgent::Resource 
     # Returns the user agent string
     attr_reader :user_agent
 

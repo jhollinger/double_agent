@@ -1,12 +1,16 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 log_glob = File.dirname(__FILE__) + '/data/*.access.log*'
-entries = DoubleAgent::log_entries(log_glob, /^\d/)
+entries = DoubleAgent::log_entries(log_glob, :match => /^\d/)
 
 describe DoubleAgent do
   context 'Logs' do
     it 'should have loaded n log entries' do
       entries.size.should == 47
+    end
+
+    it 'should have loaded n log entries' do
+      DoubleAgent::log_entries(log_glob, :match => /^\d/, :ignore => %r{ /dashboard }).size.should == 44
     end
   end
 
