@@ -1,3 +1,7 @@
+== Release ?
+
+* #log_entries takes :match and :ignore regexp options
+
 == Release 0.0.3 (May 6, 2011)
 
 * Fixed bug from 0.0.2 in Ruby 1.8 where browser versions never got parsed
