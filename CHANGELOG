@@ -1,3 +1,7 @@
+== Release 0.1.2 (June 30, 2011)
+
+* Bugfix to #browser_sum and #os_sym returning nil on an empty or nil user agent. Should return :unkown.
+
 == Release 0.1.1 (May 10, 2011)
 
 * #log_entries takes :match and :ignore regexp options
