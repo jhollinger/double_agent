@@ -21,8 +21,11 @@ describe DoubleAgent do
     it 'returns :unknown for browser_sym' do
       DoubleAgent.browser_sym('froofroo').should == :unknown
     end
-    it 'returns :unknown for browser_sym' do
+    it 'returns :unknown for an empty browser_sym' do
       DoubleAgent.browser_sym('').should == :unknown
+    end
+    it 'returns :unknown for a nil browser_sym' do
+      DoubleAgent.browser_sym(nil).should == :unknown
     end
 
     #browser_family
@@ -34,15 +37,33 @@ describe DoubleAgent do
     it 'returns :firefox for browser_family_sym' do
       DoubleAgent.browser_family_sym(@ua_string).should == :firefox
     end
+    it 'returns :unknown for an empty browser_family_sym' do
+      DoubleAgent.browser_family_sym('').should == :unknown
+    end
+    it 'returns :unknown for a nil browser_family_sym' do
+      DoubleAgent.browser_family_sym(nil).should == :unknown
+    end
 
     #browser_icon
     it 'returns :firefox for browser_sym' do
       DoubleAgent.browser_icon(@ua_string).should == :firefox
     end
+    it 'returns :unkown for an empty browser_sym' do
+      DoubleAgent.browser_icon('').should == :unknown
+    end
+    it 'returns :unkown for a nil browser_sym' do
+      DoubleAgent.browser_icon(nil).should == :unknown
+    end
 
     #browser_family_icon
     it 'returns :firefox for browser_family_sym' do
       DoubleAgent.browser_family_icon(@ua_string).should == :firefox
+    end
+    it 'returns :unkown for an empty browser_family_sym' do
+      DoubleAgent.browser_family_icon('').should == :unknown
+    end
+    it 'returns :unkown for a nil browser_family_sym' do
+      DoubleAgent.browser_family_icon(nil).should == :unknown
     end
 
     #os
@@ -62,6 +83,12 @@ describe DoubleAgent do
     end
     it 'returns :unknown for os_sym' do
       DoubleAgent.os_sym('froofroo').should == :unknown
+    end
+    it 'returns :unknown for an empty os_sym' do
+      DoubleAgent.os_sym('').should == :unknown
+    end
+    it 'returns :unknown for a nil os_sym' do
+      DoubleAgent.os_sym(nil).should == :unknown
     end
 
     #os_family

@@ -161,7 +161,7 @@ module DoubleAgent
   # Parses and evals BROWSER_DATA into a case statement inside of the browser_sym method.
   def self.load_browsers!
     BROWSERS.clear
-    str = "case user_agent\n"
+    str = "case user_agent.to_s\n"
     BROWSER_DATA.each do |data|
       BROWSERS[data[:sym]] = BrowserParser.new(data)
       str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
@@ -174,7 +174,7 @@ module DoubleAgent
   # Parses and evals OS_DATA into a case statement inside of the os_sym method.
   def self.load_oses!
     OSES.clear
-    str = "case user_agent\n"
+    str = "case user_agent.to_s\n"
     OS_DATA.each do |data|
       OSES[data[:sym]] = OSParser.new(data)
       str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
