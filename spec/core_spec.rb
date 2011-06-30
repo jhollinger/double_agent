@@ -21,6 +21,9 @@ describe DoubleAgent do
     it 'returns :unknown for browser_sym' do
       DoubleAgent.browser_sym('froofroo').should == :unknown
     end
+    it 'returns :unknown for browser_sym' do
+      DoubleAgent.browser_sym('').should == :unknown
+    end
 
     #browser_family
     it 'returns Firefox for browser family' do
@@ -48,6 +51,9 @@ describe DoubleAgent do
     end
     it 'returns Unknowna for OS' do
       DoubleAgent.os('froofroo').should == 'Unknown'
+    end
+    it 'returns Unknowna for OS' do
+      DoubleAgent.os('').should == 'Unknown'
     end
 
     #os_sym

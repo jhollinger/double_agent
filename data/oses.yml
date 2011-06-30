@@ -69,4 +69,4 @@
 
 - :name: Unknown
   :sym: :unknown
-  :regex: .+
+  :regex: .*
