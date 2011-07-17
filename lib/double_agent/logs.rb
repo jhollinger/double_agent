@@ -2,7 +2,7 @@ require 'zlib'
 
 module DoubleAgent
   # Accepts a glob path like /var/logs/apache/my-site.access.log*,
-  # parses all matching files into an array of LegEntry objects, and returns them.
+  # parses all matching files into an array of LogEntry objects, and returns them.
   #
   # options[:match] and options[:ignore] can each take a regular expression,
   # ignoring lines that do and don't match, respectively.
