@@ -9,20 +9,17 @@ agent strings. It is designed for parsing large sets for review or analysis.
 
 == Loading
 
-Double Agent is broken up into four components - core, resources, stats, logs
+Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
 
-    # Load the default components (core, resources and stats)
+    # Load the core modules (Parser, Resources)
     require 'double_agent'
 
-    # Load components individually (some have dependencies on others)
-    require 'double_agent/core|resources|stats|logs'
+    # Load modules individually
+    require 'double_agent/parser|resources|stats|logs|all'
 
-    # Load everything
-    require 'double_agent/all'
+= Parser
 
-= The Core Parser
-
-    ua_string = "pretent I'm a user agent string for Chrome on Ubuntu"
+    ua_string = "I'm a user agent string for Chrome 11 on Ubuntu"
 
     DoubleAgent.browser(ua_string)
     => "Chrome 11"
@@ -41,7 +38,7 @@ See the DoubleAgent module for more.
 = Resources
 
 DoubleAgent::Resource is a mix-in for objects with a user_agent method or attribute.
-It gives that class's objects all of the above methods.
+It gives that class's objects all of the above methods and more.
 
     class Login
       include DoubleAgent::Resource
@@ -61,29 +58,30 @@ It gives that class's objects all of the above methods.
 
 = Stats
 
-Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::percentages_for.
+Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats::percentages_for.
 
     logins = Login.all
-    stats = DoubleAgent.percentages_for(logins, :browser_family, :os_family)
+    p logins.size
+    => 1000
 
+    stats = DoubleAgent::Stats.percentages_for(logins, :browser_family, :os_family)
     p stats
-    => [["Firefox", "Windows", 50.0], ["Internet Explorer", "Windows", 20.0], ["Safari", "OS X", 20.0], ["Firefox", "GNU/Linux", 10.0]]
+    => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
 
-    stats.each do |browser_family, os_family, percent|
-      puts "#{browser_family} on #{os_family} - #{percent}%"
+    stats.each do |browser_family, os_family, percent, real_num|
+      puts "#{browser_family} on #{os_family} - #{percent}% (#{real_num} hits)"
     end
 
 = Logs
 
-DoubleAgent::log_entries parses through Apache and Nginx access logs, instantiating each log line into a DoubleAgent::LogEntry
-object. It even reads gzipped logs (requires zlib)! Since the DoubleAgent::LogEntry class mixes in DoubleAgent::Resource, you
-can easily calculate browser and/or OS market share on your site.
+DoubleAgent::Logs::entries parses through Apache and Nginx access logs, instantiating each log line into a DoubleAgent::Logs::Entry
+object. It even reads gzipped logs (requires zlib)! Since the DoubleAgent::Logs::Entry class mixes in DoubleAgent::Resource, you
+can easily calculate browser and/or OS share on your site.
 
-    require 'double_agent'
-    require 'double_agent/logs'
-
-    entries = DoubleAgent.log_entries("/var/log/nginx/my-site.access.log*")
-    stats = DoubleAgent.percentages_for(entries, :browser)
+    entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
+    stats = DoubleAgent::Stats.percentages_for(entries, :browser)
 
     p stats
-    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
+    => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
+
+Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent.

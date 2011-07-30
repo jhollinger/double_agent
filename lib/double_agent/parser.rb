@@ -34,7 +34,7 @@ module DoubleAgent
       end
     end
 
-    # Returns the browser's name. If you provide an user agent string as an argument,
+    # Returns the browser's name. If you provide a user agent string as an argument,
     # it will attempt to also return the major version number. E.g. "Firefox 4".
     def browser(ua=nil)
       if ua and (@version or @safe_version)
@@ -48,7 +48,7 @@ module DoubleAgent
     # BrowserParser would return the Chromium BrowserParser. For browsers that are their 
     # own family (e.g. Firefox, IE) it will end up returning itself.
     def family
-      BROWSERS[family_sym]
+      BROWSERS[@family_sym]
     end
     
     private
@@ -56,7 +56,7 @@ module DoubleAgent
     # Attempts to parse and return the browser's version from a user agent string. Returns
     # nil if nothing is found.
     def version(ua)
-      if @safe_version and RUBY_VERSION < MIN_VERSION
+      if @safe_version
         ua.slice(@safe_version[0]).slice(@safe_version[1])
       else
         ua.slice(@version)
@@ -83,7 +83,7 @@ module DoubleAgent
     # OSParser would return the GNU/Linux OSerParser. For OSes that are their own
     # family (e.g. OS X) it will end up returning itself.
     def family
-      OSES[family_sym]
+      OSES[@family_sym]
     end
   end
 

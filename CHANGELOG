@@ -1,3 +1,15 @@
+== Release 0.2.0 (?)
+
+* Seperate code into real modules
+
+* Only load parser and resources by default
+
+* Add subtotals to percentages_for
+
+* Add more data parsing methods to DoubleAgent::Logs::Entry objects
+
+* Various optimizations
+
 == Release 0.1.2 (June 30, 2011)
 
 * Bugfix to #browser_sum and #os_sym returning nil on an empty or nil user agent. Should return :unkown.
