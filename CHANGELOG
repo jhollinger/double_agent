@@ -1,4 +1,4 @@
-== Release 0.2.0 (?)
+== Release 0.2.0 (July 30, 2011)
 
 * Seperate code into real modules
 
@@ -8,7 +8,7 @@
 
 * Add more data parsing methods to DoubleAgent::Logs::Entry objects
 
-* Various optimizations
+* Various optimizations and stuff I forgot about
 
 == Release 0.1.2 (June 30, 2011)
 
