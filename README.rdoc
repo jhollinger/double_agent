@@ -71,6 +71,10 @@ Calculate browser and OS shares for large sets of DoubleAgent::Resource objects 
     stats.each do |browser_family, os_family, percent, real_num|
       puts "#{browser_family} on #{os_family} - #{percent}% (#{real_num} hits)"
     end
+    => "Firefox on Windows - 50% (500 hits)"
+    => "Internet Explorer on Windows - 20% (200 hits)"
+    => "Safari on OS X - 20% (200 hits)"
+    => "Firefox on GNU/Linux - 10% (100 hits)"
 
 = Logs
 
