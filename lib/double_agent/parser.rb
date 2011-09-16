@@ -1,3 +1,7 @@
+begin
+  require 'psych'
+rescue LoadError
+end
 require 'yaml'
 
 module DoubleAgent
