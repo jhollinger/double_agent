@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../lib/double_agent/resources'
 require File.dirname(__FILE__) + '/../lib/double_agent/stats'
 require File.dirname(__FILE__) + '/../lib/double_agent/logs'
 
-Rspec.configure do |c|
+RSpec.configure do |c|
   c.mock_with :rspec
 end
 
