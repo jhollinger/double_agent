@@ -61,7 +61,7 @@ module DoubleAgent
     # nil if nothing is found.
     def version(ua)
       if @safe_version
-        ua.slice(@safe_version[0]).slice(@safe_version[1])
+        ua.slice(@safe_version[0]).slice(@safe_version[1]) rescue nil
       else
         ua.slice(@version)
       end
