@@ -70,6 +70,11 @@ describe DoubleAgent do
     "#{DA.browser ua} on #{DA.os ua}".should == 'Firefox 4 on GNU/Linux'
   end
 
+  it 'should be Firefox 7 on Android' do
+    ua = "Mozilla/5.0 (Android; Linux armv7l; rv:7.0.1) Gecko/20110928 Firefox/7.0.1 Fennec/7.0.1"
+    "#{DA.browser ua} on #{DA.os ua}".should == 'Firefox 7 on Android'
+  end
+
   # Epiphany
   it 'should be Epiphany on GNU/Linux' do
     ua = "Mozilla/5.0 (X11; U; Linux x86_64; fr-FR) AppleWebKit/534.7 (KHTML, like Gecko) Epiphany/2.30.6 Safari/534.7"
