@@ -80,15 +80,23 @@ module DoubleAgent
       entries = []
 
       # Define the parse lambda
-      parse = (match or ignore) \
-        ? lambda { |line| entries << Entry.new(line) unless (match and line !~ match) or (ignore and line =~ ignore) } \
-        : lambda { |line| entries << Entry.new(line) }
+      parse = if match or ignore
+        lambda { |line|
+          begin
+            entries << Entry.new(line) unless (match and line !~ match) or (ignore and line =~ ignore)
+          rescue ArgumentError => e
+            $stderr.puts "#{e.message}: #{line}"
+          end
+        }
+      else
+        lambda { |line| entries << Entry.new(line) }
+      end
 
       # Define the read lambda
       read = lambda do |f|
         zipped = f =~ /\.gz\Z/i
         return unless ZLIB or not zipped
-        File.open(f, 'r') do |file|
+        File.open(f, 'r:UTF-8') do |file|
           handle = zipped ? Zlib::GzipReader.new(file) : file
           #handle.each_line &parse # A little slower, but may be more memory efficient
           handle.readlines.each &parse
