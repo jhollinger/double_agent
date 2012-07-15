@@ -1,3 +1,7 @@
+== Release 0.2.3 (July 14, 2012) ==
+
+* Handle exceptions on encoding errors
+
 == Release 0.2.2 (November 1, 2011)  ==
 
 * Detect Firefox on Android (Fennec)

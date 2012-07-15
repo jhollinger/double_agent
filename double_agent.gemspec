@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
+require File.join(File.dirname(__FILE__), 'lib', 'double_agent', 'version')
 
 Gem::Specification.new do |spec|
   spec.name = 'double_agent'
-  spec.version = '0.2.2'
+  spec.version = DoubleAgent::VERSION
   spec.summary = "Browser User Agent string parser"
   spec.description = "Browser User Agent string parser with resources, stats, and a log reader"
   spec.authors = ['Jordan Hollinger']
