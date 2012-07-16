@@ -44,28 +44,6 @@ describe DoubleAgent do
       DoubleAgent.browser_family_sym(nil).should == :unknown
     end
 
-    #browser_icon
-    it 'returns :firefox for browser_sym' do
-      DoubleAgent.browser_icon(@ua_string).should == :firefox
-    end
-    it 'returns :unkown for an empty browser_sym' do
-      DoubleAgent.browser_icon('').should == :unknown
-    end
-    it 'returns :unkown for a nil browser_sym' do
-      DoubleAgent.browser_icon(nil).should == :unknown
-    end
-
-    #browser_family_icon
-    it 'returns :firefox for browser_family_sym' do
-      DoubleAgent.browser_family_icon(@ua_string).should == :firefox
-    end
-    it 'returns :unkown for an empty browser_family_sym' do
-      DoubleAgent.browser_family_icon('').should == :unknown
-    end
-    it 'returns :unkown for a nil browser_family_sym' do
-      DoubleAgent.browser_family_icon(nil).should == :unknown
-    end
-
     #os
     it 'returns Ubuntua for OS' do
       DoubleAgent.os(@ua_string).should == 'Ubuntu'
@@ -99,16 +77,6 @@ describe DoubleAgent do
     #os_family_sym
     it 'returns :linux for os_family_sym' do
       DoubleAgent.os_family_sym(@ua_string).should == :linux
-    end
-
-    #os_icon
-    it 'returns :ubuntu for os_sym' do
-      DoubleAgent.os_icon(@ua_string).should == :ubuntu
-    end
-
-    #os_family_icon
-    it 'returns :linux for os_family_sym' do
-      DoubleAgent.os_family_icon(@ua_string).should == :linux
     end
   end
 end

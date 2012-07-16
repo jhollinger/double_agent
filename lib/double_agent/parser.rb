@@ -22,14 +22,13 @@ module DoubleAgent
 
   class BrowserParser
     BLANK = ''
-    attr_reader :sym, :family_sym, :icon
+    attr_reader :sym, :family_sym
 
     # Instantiate a new BrowserParser using a "browser family" element from BROWSER_DATA
     def initialize(attrs={})
       @sym = attrs[:sym]
       @family_sym = attrs[:family_sym] || @sym
       @name = attrs[:name]
-      @icon = attrs[:icon] || @sym
       if attrs[:version]
         @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
       end
@@ -66,14 +65,13 @@ module DoubleAgent
   # that is not currently happening.
 
   class OSParser
-    attr_reader :os, :sym, :family_sym, :icon
+    attr_reader :os, :sym, :family_sym
 
     # Instantiate a new OSParser using an "OS family" element from OS_DATA
     def initialize(attrs={})
       @sym = attrs[:sym]
       @family_sym = attrs[:family_sym] || @sym
       @os = attrs[:name]
-      @icon = attrs[:icon] || @sym
     end
 
     # Returns the OSParser for this OSParser object's Family. E.g. the Ubuntu
@@ -94,11 +92,6 @@ module DoubleAgent
     # This method is overwitten by load_browsers!
   end
 
-  # Returns the browser's icon name, e.g. :chrome
-  def self.browser_icon(ua)
-    browser_parser(ua).icon
-  end
-
   # Returns the browser's family name, e.g. "Chromium"
   def self.browser_family(ua)
     browser_parser(ua).family.browser
@@ -107,11 +100,6 @@ module DoubleAgent
   # Returns the browser's family's symbol name, e.g. :chromium
   def self.browser_family_sym(ua)
     browser_parser(ua).family_sym
-  end
-
-  # Returns the browser's family's icon name, e.g. :chromium
-  def self.browser_family_icon(ua)
-    browser_parser(ua).family.icon
   end
 
   # Returns the OS's name, e.g. "Ubuntu"
@@ -124,11 +112,6 @@ module DoubleAgent
     # This method is overwitten by load_oses!
   end
 
-  # Returns the OS's icon name, e.g. :ubuntu
-  def self.os_icon(ua)
-    os_parser(ua).icon
-  end
-
   # Returns the OS's family, e.g. "GNU/Linux"
   def self.os_family(ua)
     os_parser(ua).family.os
@@ -137,11 +120,6 @@ module DoubleAgent
   # Returns the OS's family's symbol name, e.g. :linux
   def self.os_family_sym(ua)
     os_parser(ua).family_sym
-  end
-
-  # Returns the OS's family's symbol icon, e.g. :linux
-  def self.os_family_icon(ua)
-    os_parser(ua).family.icon
   end
 
   # Returns the correct BrowerParser for the given user agent or symbol

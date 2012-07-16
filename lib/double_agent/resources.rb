@@ -14,11 +14,6 @@ module DoubleAgent
       _browser_parser.sym
     end
 
-    # Return's this object's browser icon name
-    def browser_icon
-      _browser_parser.icon
-    end
-
     # Return's this object's browser family name
     def browser_family
       _browser_parser.family.browser
@@ -27,11 +22,6 @@ module DoubleAgent
     # Return's this object's browser family symbol name
     def browser_family_sym
       _browser_parser.family_sym
-    end
-
-    # Return's this object's browser family icon name
-    def browser_family_icon
-      _browser_parser.family.icon
     end
 
     # Return's this object's OS name
@@ -44,11 +34,6 @@ module DoubleAgent
       _os_parser.sym
     end
 
-    # Return's this object's OS icon name
-    def os_icon
-      _os_parser.icon
-    end
-
     # Return's this object's OS family name
     def os_family
       _os_parser.family.os
@@ -57,11 +42,6 @@ module DoubleAgent
     # Return's this object's OS family symbol name
     def os_family_sym
       _os_parser.family_sym
-    end
-
-    # Return's this object's OS family icon name
-    def os_family_icon
-      _os_parser.family.icon
     end
 
     private

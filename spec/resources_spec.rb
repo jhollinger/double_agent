@@ -35,16 +35,6 @@ describe DoubleAgent do
       @login.browser_family_sym.should == :firefox
     end
 
-    #browser_icon
-    it 'returns :firefox for browser_sym' do
-      @login.browser_icon.should == :firefox
-    end
-
-    #browser_family_icon
-    it 'returns :firefox for browser_family_sym' do
-      @login.browser_family_icon.should == :firefox
-    end
-
     #os
     it 'returns Ubuntua for OS' do
       @login.os.should == 'Ubuntu'
@@ -63,16 +53,6 @@ describe DoubleAgent do
     #os_family_sym
     it 'returns :linux for os_family_sym' do
       @login.os_family_sym.should == :linux
-    end
-
-    #os_icon
-    it 'returns :ubuntu for os_sym' do
-      @login.os_icon.should == :ubuntu
-    end
-
-    #os_family_icon
-    it 'returns :linux for os_family_sym' do
-      @login.os_family_icon.should == :linux
     end
   end
 end
