@@ -1,6 +1,7 @@
 68.52.99.211 - - [05/May/2011:08:21:04 -0400] "GET / HTTP/1.1" 200 1312 "-" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110420 Firefox/3.6.17"
 68.52.99.211 - - [05/May/2011:08:25:47 -0400] "POST /entries HTTP/1.1" 200 7889 "http://www.example.com/entries/new" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.17) Gecko/20110420 Firefox/3.6.17"
 216.84.130.30 - - [04/May/2011:09:45:42 -0400] "GET /dashboard HTTP/1.1" 302 104 "-" "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_6 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8E200 Safari/6533.18.5"
+216.84.130.30 - - [04/May/2011:09:45:42 -0400] "GET /foo HTTP/1.1" 302 104 "-" "Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5"
 173.190.91.2 - - [04/May/2011:10:51:09 -0400] "GET /images/icons/opera_browser.png?1295928127 HTTP/1.1" 304 0 "http://cur8.cur8.net/sbin/sites/2/page_hit_stats" "Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"
 173.190.91.2 - - [04/May/2011:10:51:09 -0400] "GET /images/icons/ubuntu_os.png?1295928127 HTTP/1.1" 304 0 "http://cur8.cur8.net/sbin/sites/2/page_hit_stats" "Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"
 173.190.91.2 - - [04/May/2011:10:52:29 -0400] "GET /sbin/sites/2/login_stats HTTP/1.1" 200 10131 "http://cur8.cur8.net/sbin/sites/2/page_hit_stats" "Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"

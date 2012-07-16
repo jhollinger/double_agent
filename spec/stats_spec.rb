@@ -6,11 +6,11 @@ entries = DoubleAgent::Logs::entries(log_glob, :match => /^\d/)
 describe DoubleAgent do
   context 'Logs' do
     it 'should have loaded n log entries' do
-      entries.size.should == 48
+      entries.size.should == 49
     end
 
     it 'should have loaded n log entries' do
-      DoubleAgent::Logs::entries(log_glob, :match => /^\d/, :ignore => %r{ /dashboard }).size.should == 45
+      DoubleAgent::Logs::entries(log_glob, :match => /^\d/, :ignore => %r{ /dashboard }).size.should == 46
     end
 
     context 'without zlib' do
@@ -18,7 +18,7 @@ describe DoubleAgent do
         suppress_warnings { DoubleAgent::Logs::ZLIB = false }
         plain_entries = DoubleAgent::Logs::entries(log_glob, :match => /^\d/)
         suppress_warnings { DoubleAgent::Logs::ZLIB = true }
-        plain_entries.size.should == 18
+        plain_entries.size.should == 19
       end
     end
 
@@ -44,21 +44,22 @@ describe DoubleAgent do
   context 'Stats' do
     it 'should calculate stats' do
       stats = DoubleAgent::Stats.percentages_for entries, :browser_family, :os_family
-      answer = [["Internet Explorer", "Windows", 41.67, 20],
-                ["Android", "GNU/Linux", 39.58, 19],
-                ["Firefox", "GNU/Linux", 10.42, 5],
-                ["Firefox", "OS X", 4.17, 2],
-                ["Safari", "OS X", 2.08, 1],
-                ["Chromium", "GNU/Linux", 2.08, 1]]
+      answer = [["Internet Explorer", "Windows", 40.82, 20],
+                ["Android", "Android", 38.78, 19],
+                ["Firefox", "GNU/Linux", 10.2, 5],
+                ["Firefox", "OS X", 4.08, 2],
+                ["Safari", "iOS", 4.08, 2],
+                ["Chromium", "GNU/Linux", 2.04, 1]]
       stats.should == answer
     end
 
     it 'should ignore stats below the threshold' do
       stats = DoubleAgent::Stats.percentages_for entries, :browser_family, :os_family, :threshold => 3.0
-      answer = [["Internet Explorer", "Windows", 41.67, 20],
-                ["Android", "GNU/Linux", 39.58, 19],
-                ["Firefox", "GNU/Linux", 10.42, 5],
-                ["Firefox", "OS X", 4.17, 2]]
+      answer = [["Internet Explorer", "Windows", 40.82, 20],
+                ["Android", "Android", 38.78, 19],
+                ["Firefox", "GNU/Linux", 10.2, 5],
+                ["Firefox", "OS X", 4.08, 2],
+                ["Safari", "iOS", 4.08, 2]]
       stats.should == answer
     end
   end

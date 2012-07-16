@@ -26,10 +26,19 @@
   :sym: :windows
   :regex: windows
 
+- :name: iPhone
+  :sym: :iphone
+  :family_sym: :ios
+  :regex: \(iphone;
+
+- :name: iPad
+  :sym: :ipad
+  :family_sym: :ios
+  :regex: \(ipad;
+
 - :name: iOS
   :sym: :ios
-  :family_sym: :osx
-  :regex: (iphone)|(ipad)
+  :regex: \(i\w+; .* like mac os x;
 
 - :name: OS X
   :sym: :osx
@@ -37,7 +46,6 @@
 
 - :name: Android
   :sym: :android
-  :family_sym: :linux
   :regex: android
 
 - :name: Ubuntu

@@ -53,6 +53,16 @@ describe DoubleAgent do
     "#{DA.browser ua} on #{DA.os ua}".should == 'Safari 5 on OS X'
   end
 
+  it 'should be Safari on iPhone (iOS)' do
+    ua = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_1_2 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7D11 Safari/528.16"
+    "#{DA.browser ua} on #{DA.os ua} (#{DA.os_family ua})".should == 'Safari 4 on iPhone (iOS)'
+  end
+
+  it 'should be Safari on iPad (iOS)' do
+    ua = "Mozilla/5.0 (iPad; U; CPU OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5"
+    "#{DA.browser ua} on #{DA.os ua} (#{DA.os_family ua})".should == 'Safari 5 on iPad (iOS)'
+  end
+
   # Opera
   it 'should be Opera 11 on GNU/Linux' do
     ua = "Opera/9.80 (X11; Linux x86_64; U; pl) Presto/2.7.62 Version/11.00"
