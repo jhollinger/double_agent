@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + '/spec_helper'
 
 DA = DoubleAgent
@@ -83,6 +84,22 @@ describe DoubleAgent do
   it 'should be Firefox 7 on Android' do
     ua = "Mozilla/5.0 (Android; Linux armv7l; rv:7.0.1) Gecko/20110928 Firefox/7.0.1 Fennec/7.0.1"
     "#{DA.browser ua} on #{DA.os ua}".should == 'Firefox 7 on Android'
+  end
+
+  # Kindle
+  it 'should be Kindle on Kindle' do
+    ua = "Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600×800; rotate)"
+    "#{DA.browser ua} on #{DA.os ua}".should == 'Kindle on Kindle'
+  end
+
+  it 'should be Kindle Fire on Kindle Fire' do
+    ua = "Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; Kindle Fire Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"
+    "#{DA.browser ua} on #{DA.os ua}".should == 'Kindle Fire on Kindle Fire'
+  end
+
+  it 'should be Kindle Fire (Silk) on Kindle Fire' do
+    ua = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us; Silk/1.1.0-80) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16 Silk-Accelerated=true"
+    "#{DA.browser ua} on #{DA.os ua}".should == 'Kindle Fire (Silk) on Kindle Fire'
   end
 
   # Epiphany

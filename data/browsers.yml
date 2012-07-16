@@ -32,6 +32,20 @@
   :regex: firefox
   :version: (?<=firefox/)[0-9]+
 
+- :name: Kindle Fire (Silk)
+  :sym: :kindle_fire_silk
+  :family_sym: :kindle
+  :regex: silk-accelerated
+
+- :name: Kindle Fire
+  :sym: :kindle_fire
+  :family_sym: :kindle
+  :regex: kindle fire
+
+- :name: Kindle
+  :sym: :kindle
+  :regex: kindle
+
 - :name: Android %s
   :sym: :android
   :regex: android

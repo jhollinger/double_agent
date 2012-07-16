@@ -26,6 +26,15 @@
   :sym: :windows
   :regex: windows
 
+- :name: Kindle Fire
+  :sym: :kindle_fire
+  :family_sym: :kindle
+  :regex: (kindle fire)|(silk-accelerated)
+
+- :name: Kindle
+  :sym: :kindle
+  :regex: kindle
+
 - :name: iPod
   :sym: :ipod
   :family_sym: :ios
