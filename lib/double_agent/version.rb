@@ -1,4 +1,4 @@
 module DoubleAgent
   # Version number
-  VERSION = '0.2.3'
+  VERSION = '3.0.0'
 end
