@@ -22,7 +22,6 @@ module DoubleAgent
 
   class BrowserParser
     BLANK = ''
-    MIN_VERSION = '1.9.2'
     attr_reader :sym, :family_sym, :icon
 
     # Instantiate a new BrowserParser using a "browser family" element from BROWSER_DATA
@@ -31,9 +30,7 @@ module DoubleAgent
       @family_sym = attrs[:family_sym] || @sym
       @name = attrs[:name]
       @icon = attrs[:icon] || @sym
-      if RUBY_VERSION < MIN_VERSION and attrs[:safe_version]
-        @safe_version = attrs[:safe_version].map { |r| Regexp.new r, Regexp::IGNORECASE }
-      elsif attrs[:version]
+      if attrs[:version]
         @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
       end
     end
@@ -41,7 +38,7 @@ module DoubleAgent
     # Returns the browser's name. If you provide a user agent string as an argument,
     # it will attempt to also return the major version number. E.g. "Firefox 4".
     def browser(ua=nil)
-      if ua and (@version or @safe_version)
+      if ua and @version
         @name % version(ua)
       else
         (@name % BLANK).rstrip
@@ -60,11 +57,7 @@ module DoubleAgent
     # Attempts to parse and return the browser's version from a user agent string. Returns
     # nil if nothing is found.
     def version(ua)
-      if @safe_version
-        ua.slice(@safe_version[0]).slice(@safe_version[1]) rescue nil
-      else
-        ua.slice(@version)
-      end
+      ua.slice(@version)
     end
   end
 

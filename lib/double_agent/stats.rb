@@ -4,18 +4,6 @@ module DoubleAgent
   # for large numbers of DoubleAgent::Resource objects.
   # 
   module Stats
-    # True if running under less than Ruby 1.9
-    BAD_RUBY = RUBY_VERSION < '1.9.0'
-
-    if BAD_RUBY
-      require 'bigdecimal'
-      # If BAD_RUBY, this is used in lieu of the native round method
-      def self.better_round(f, n)
-        d = BigDecimal.new f.to_s
-        d.round(n).to_f
-      end
-    end
-
     # For the given "things", returns the share of the group that each attr has.
     # 
     # "things" is an array of objects who's classes mix-in DoubleAgent::Resource.
@@ -48,13 +36,7 @@ module DoubleAgent
       size = things.size.to_f
       results = results.to_a
       # From the total, calculate the percentage held by each browser, OS, etc.
-      if BAD_RUBY
-        results.collect! { |k,n| [*k.<<(better_round(((n * 100) / size), 2)).<<(n)] }
-      else
-        # Ruby 1.9 syntax that blows up in Ruby 1.8
-        #results.collect! { |k,n| [*k, ((n * 100) / size).round(2), n] }
-        results.collect! { |k,n| [*k.<<(((n * 100) / size).round(2)).<<(n)] }
-      end
+      results.collect! { |k,n| [*k, ((n * 100) / size).round(2), n] }
       # Sort in ascending order
       results.sort! { |a,b| b.last <=> a.last }
       # Reject percentages below a specified threshold
