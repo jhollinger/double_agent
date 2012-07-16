@@ -6,6 +6,11 @@
   :regex: msie \d+
   :version: (?<=msie )[0-9]+
 
+- :name: Epiphany
+  :sym: :epiphany
+  :regex: epiphany
+  :version: (?<=epiphany/)[0-9]+
+
 - :name: Chrome %s
   :sym: :chrome
   :family_sym: :chromium
@@ -35,11 +40,6 @@
 - :name: BlackBerry
   :sym: :blackberry
   :regex: blackberry
-
-- :name: Epiphany
-  :sym: :epiphany
-  :regex: epiphany
-  :version: (?<=epiphany/)[0-9]+
 
 - :name: Safari %s
   :sym: :safari
