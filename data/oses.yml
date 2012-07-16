@@ -26,6 +26,11 @@
   :sym: :windows
   :regex: windows
 
+- :name: iPod
+  :sym: :ipod
+  :family_sym: :ios
+  :regex: \(ipod;
+
 - :name: iPhone
   :sym: :iphone
   :family_sym: :ios
