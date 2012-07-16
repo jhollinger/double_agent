@@ -1,3 +1,8 @@
+== Release 0.2.4 (?) ==
+
+* Android's browser isn't part of the Chromium family
+* Drop support for Ruby 1.8
+
 == Release 0.2.3 (July 14, 2012) ==
 
 * Handle exceptions on encoding errors
