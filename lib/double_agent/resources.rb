@@ -44,6 +44,11 @@ module DoubleAgent
       _os_parser.family_sym
     end
 
+    # Returs true if the browser appears to be on a mobile device, false if not
+    def mobile?
+      _os_parser.mobile?
+    end
+
     private
 
     # Returns and caches a BrowserParser for this object

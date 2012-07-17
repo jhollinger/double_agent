@@ -10,6 +10,12 @@ module DoubleAgent
         @sym = attrs[:sym]
         @family_sym = attrs[:family_sym] || @sym
         @os = attrs[:name]
+        @modile = attrs[:mobile] || false
+      end
+
+      # Returs true if this is mobile OS, false if not
+      def mobile?
+        @modile
       end
 
       # Returns the OSParser for this OSParser object's Family. E.g. the Ubuntu

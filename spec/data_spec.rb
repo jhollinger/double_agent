@@ -48,6 +48,12 @@ describe DoubleAgent do
     "#{DA.browser ua} on #{DA.os ua}".should == 'Android 2.3 on Android'
   end
 
+  it 'should be mobile' do
+    ua = "Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"
+    DA.parse(ua).mobile?.should == true
+    DA.mobile?(ua).should == true
+  end
+
   # Safari
   it 'should be Safari 5 on OS X' do
     ua = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_8; zh-cn) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27"

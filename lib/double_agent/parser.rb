@@ -74,6 +74,11 @@ module DoubleAgent
     os_parser(ua).family_sym
   end
 
+  # Returs true if the browser appears to be on a mobile device, false if not
+  def self.mobile?(ua)
+    os_parser(ua).mobile?
+  end
+
   # Returns the correct BrowerParser for the given user agent or symbol
   def self.browser_parser(ua_or_sym)
     BROWSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : browser_sym(ua_or_sym)]

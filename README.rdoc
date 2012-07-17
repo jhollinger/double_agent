@@ -35,6 +35,9 @@ Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
     user_agent.os_family
     => "GNU/Linux"
 
+    user_agent.mobile?
+    => false
+
     # Or
 
     DoubleAgent.browser("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")

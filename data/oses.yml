@@ -26,29 +26,35 @@
   :sym: :kindle_fire
   :family_sym: :kindle
   :regex: (kindle fire)|(silk-accelerated)
+  :mobile: true
 
 - :name: Kindle
   :sym: :kindle
   :regex: kindle
+  :mobile: true
 
 - :name: iPod
   :sym: :ipod
   :family_sym: :ios
   :regex: \(ipod;
+  :mobile: true
 
 - :name: iPhone
   :sym: :iphone
   :family_sym: :ios
   :regex: \(iphone;
+  :mobile: true
 
 - :name: iPad
   :sym: :ipad
   :family_sym: :ios
   :regex: \(ipad;
+  :mobile: true
 
 - :name: iOS
   :sym: :ios
   :regex: \(i\w+; .* like mac os x;
+  :mobile: true
 
 - :name: OS X
   :sym: :osx
@@ -57,6 +63,7 @@
 - :name: Android
   :sym: :android
   :regex: android
+  :mobile: true
 
 - :name: Ubuntu
   :sym: :ubuntu
@@ -84,6 +91,7 @@
 - :name: BlackBerry
   :sym: :blackberry
   :regex: blackberry
+  :mobile: true
 
 - :name: Unknown
   :sym: :unknown
