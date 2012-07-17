@@ -5,6 +5,7 @@
 * iOS isn't part of the OS X family
 * Add iPhone and iPad
 * Add Kindle, Kindle Fire
+* Add "mobile?" method to detect mobile OS's
 * Drop icon methods - they just don't make much sense in the library
 * Drop support for Ruby 1.8
 
