@@ -2,25 +2,21 @@
   :sym: :windows_8
   :family_sym: :windows
   :regex: windows nt 6\.2
-  :icon: windows
 
 - :name: Windows 7
   :sym: :windows_7
   :family_sym: :windows
   :regex: windows nt 6\.1
-  :icon: windows
 
 - :name: Windows Vista
   :sym: :windows_vista
   :family_sym: :windows
   :regex: windows nt 6\.0
-  :icon: windows
 
 - :name: Windows XP
   :sym: :windows_xp
   :family_sym: :windows
   :regex: windows nt 5\.[12]
-  :icon: windows
 
 - :name: Windows
   :sym: :windows
