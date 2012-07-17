@@ -21,25 +21,30 @@ Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
 
 = Parser
 
-    ua_string = "I'm a user agent string for Chrome 11 on Ubuntu"
+    user_agent = DoubleAgent.parse("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")
 
-    DoubleAgent.browser(ua_string)
-    => "Chrome 11"
+    user_agent.browser
+    => "Chrome 18"
 
-    DoubleAgent.browser_family(ua_string)
+    user_agent.browser_family
     => "Chromium"
 
-    DoubleAgent.os(ua_string)
+    user_agent.os
     => "Ubuntu"
 
-    DoubleAgent.os_family(ua_string)
+    user_agent.os_family
     => "GNU/Linux"
+
+    # Or
+
+    DoubleAgent.browser("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")
+    => "Chrome 18"
 
 See the DoubleAgent module for more.
 
 = Resources
 
-DoubleAgent::Resource is a mix-in for objects with a user_agent method or attribute.
+DoubleAgent::Resource is a mix-in for objects with a user_agent method.
 It gives that class's objects all of the above methods and more.
 
     class Login

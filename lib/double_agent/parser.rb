@@ -1,15 +1,14 @@
-begin
-  require 'psych'
-rescue LoadError
-end
-require 'yaml'
+require 'double_agent/parsers/browser'
+require 'double_agent/parsers/os'
+require 'double_agent/resources'
+require 'psych'
 
 module DoubleAgent
   # An array of "browser knowledge hashes," the basis of browser parsing. You may edit this data and call load_browsers! to customize parsing.
-  BROWSER_DATA = YAML.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
+  BROWSER_DATA = Psych.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
 
   # An array of "OS knowledge hashes," the basis of OS parsing. You may edit this data and call load_oses! to customize parsing.
-  OS_DATA = YAML.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
+  OS_DATA = Psych.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
 
   # An array of BrowserParser objects created from the data in BROWSER_DATA.
   BROWSERS = {}
@@ -17,68 +16,21 @@ module DoubleAgent
   # An array of OSParser objects created from the data in OS_DATA.
   OSES = {}
 
-  # Each browser in BROWSER_DATA gets its own BrowserParser object. These 
-  # parser objects are then used to parse specific data out of a user agent string.
-
-  class BrowserParser
-    BLANK = ''
-    attr_reader :sym, :family_sym
-
-    # Instantiate a new BrowserParser using a "browser family" element from BROWSER_DATA
-    def initialize(attrs={})
-      @sym = attrs[:sym]
-      @family_sym = attrs[:family_sym] || @sym
-      @name = attrs[:name]
-      if attrs[:version]
-        @version = Regexp.new(attrs[:version], Regexp::IGNORECASE)
-      end
-    end
-
-    # Returns the browser's name. If you provide a user agent string as an argument,
-    # it will attempt to also return the major version number. E.g. "Firefox 4".
-    def browser(ua=nil)
-      if ua and @version
-        @name % version(ua)
-      else
-        (@name % BLANK).rstrip
-      end
-    end
-
-    # Returns the BrowserParser for this BrowserParser object's Family. E.g. the Chrome 
-    # BrowserParser would return the Chromium BrowserParser. For browsers that are their 
-    # own family (e.g. Firefox, IE) it will end up returning itself.
-    def family
-      BROWSERS[@family_sym]
-    end
-    
-    private
-
-    # Attempts to parse and return the browser's version from a user agent string. Returns
-    # nil if nothing is found.
-    def version(ua)
-      ua.slice(@version)
-    end
+  # Returns a new UserAgent object
+  def self.parse(user_agent_string)
+    UserAgent.new(user_agent_string)
   end
 
-  # Each OS in OS_DATA gets its own OSParser object. In theory, these parser
-  # objects can then be used to grab further info from user agent strings, though
-  # that is not currently happening.
+  # A class representing a browser's user agent string. Various member methods parse and return browser and OS details.
+  class UserAgent
+    include DoubleAgent::Resource
 
-  class OSParser
-    attr_reader :os, :sym, :family_sym
+    # The user agent string
+    attr_reader :user_agent
 
-    # Instantiate a new OSParser using an "OS family" element from OS_DATA
-    def initialize(attrs={})
-      @sym = attrs[:sym]
-      @family_sym = attrs[:family_sym] || @sym
-      @os = attrs[:name]
-    end
-
-    # Returns the OSParser for this OSParser object's Family. E.g. the Ubuntu
-    # OSParser would return the GNU/Linux OSerParser. For OSes that are their own
-    # family (e.g. OS X) it will end up returning itself.
-    def family
-      OSES[@family_sym]
+    # Instantiate a new UserAgent object
+    def initialize(user_agent_string)
+      @user_agent = user_agent_string
     end
   end
 
@@ -138,7 +90,7 @@ module DoubleAgent
     BROWSERS.clear
     str = "case user_agent.to_s\n"
     BROWSER_DATA.each do |data|
-      BROWSERS[data[:sym]] = BrowserParser.new(data)
+      BROWSERS[data[:sym]] = Parsers::Browser.new(data)
       str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
     end
     str << 'end'
@@ -151,7 +103,7 @@ module DoubleAgent
     OSES.clear
     str = "case user_agent.to_s\n"
     OS_DATA.each do |data|
-      OSES[data[:sym]] = OSParser.new(data)
+      OSES[data[:sym]] = Parsers::OS.new(data)
       str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
     end
     str << 'end'
