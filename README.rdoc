@@ -108,11 +108,31 @@ Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent
 
 = Graphs
 
-DoubleAgent::Graphs offers several helpers for generating gruff graphs. Here's an example pie chart, using DoubleAgent::Logs as a data source. However, any object that includes DoubleAgent::Resource can be used.
+DoubleAgent::Graphs offers several helpers for generating gruff graphs.
 
+    # Any objects that includes DoubleAgent::Resource can be used instead
     log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
 
-    DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png', 'Browser Share')
+    # A pie chart of Firefox version shares
+    ff = log_entries.select { |e| e.browser_sym == :firefox }
+    DoubleAgent::Graphs.pie(ff, :browser, '/path/to/ff-version-share.png', 'Firefox Version Share')
+
+    # A line graph of daily browser family share over time, tricked out with lots of options
+    # See http://gruff.rubyforge.org/classes/Gruff/Base.html for more Gruff options
+    DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
+      chart.title = 'Browser Share'
+      chart.font = '/path/to/awesome/font.ttf'
+      chart.theme = {
+        :colors => %w(orange purple green white red),
+        :marker_color => 'blue',
+        :background_colors => %w(black grey)
+      }
+
+      # Only show every 7th label, and make dates pretty
+      labeler.call(7) do |date|
+        date.strftime('%b %e')
+      end
+    end
 
 Look at DoubleAgent::Graphs for more graphs and lots more examples.
 
