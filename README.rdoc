@@ -21,6 +21,8 @@ Double Agent is broken up into modules - Parser, Resources, Stats, Logs and Grap
     # Load modules individually
     require 'double_agent/parser|resources|stats|logs|graphs|all'
 
+Read the full documentation at http://jordanhollinger.com/docs/double_agent/
+
 = Parser
 
     user_agent = DoubleAgent.parse("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")
@@ -113,3 +115,8 @@ DoubleAgent::Graphs offers several helpers for generating gruff graphs. Here's a
     DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png', 'Browser Share')
 
 Look at DoubleAgent::Graphs for more graphs and lots more examples.
+
+== License
+Copyright 2011 Jordan Hollinger
+
+Licensed under the Apache License
