@@ -3,7 +3,7 @@
 double_agent is a library for parsing browser and operating system info out of user 
 agent strings. It is designed for parsing large sets for review or analysis.
 
-*New in 1.0.0* Helpers for generating pretty graphs!! Requires gruff.
+*NEW* in 1.0.0: helpers for generating pretty graphs!! Requires gruff.
 
 *NOTE* Support for Ruby 1.8.x was dropped after version 0.2.3.
 
