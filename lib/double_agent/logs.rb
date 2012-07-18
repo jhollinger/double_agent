@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'date'
+require 'time'
 
 module DoubleAgent
   # 
@@ -35,13 +36,9 @@ module DoubleAgent
 
       # Regex for parsing the date out of the log line
       DATESTAMP_REGEXP = %r{[0-9]+/[a-z]+/[0-9]+:}i
-      # Regex for parsing DATESTAMP_REGEXP into a Date object
-      DATESTAMP_FORMAT = '%d/%B/%Y:'
 
       # Regex for parsing the datetime out of the log line
       TIMESTAMP_REGEXP = %r{[0-9]+/[a-z]+/[0-9]+:[0-9]+:[0-9]+:[0-9]+ (-|\+)[0-9]+}i
-      # Regex for parsing TIMESTAMP_REGEXP into a DateTime object
-      TIMESTAMP_FORMAT = '%d/%B/%Y:%H:%M:%S %z'
 
       # Initializes a new Entry object. An Apache or Nginx log line should be
       # passed to it.
@@ -52,19 +49,21 @@ module DoubleAgent
 
       # Returns the IP address the hit originated from
       def ip
-        @line.slice(IP_REGEXP)
+        @ip ||= @line.slice(IP_REGEXP)
       end
 
       # Returns the Date the hit occurred on
-      def on
-        date_str = @line.slice(DATESTAMP_REGEXP)
-        date_str ? Date.strptime(date_str, DATESTAMP_FORMAT) : nil
+      def date
+        @date ||= Date.parse(@line.slice(DATESTAMP_REGEXP)) rescue nil
       end
 
-      # Returns the DateTime the hit occurred at
-      def at
-        datetime_str = @line.slice(TIMESTAMP_REGEXP)
-        datetime_str ? DateTime.strptime(datetime_str, TIMESTAMP_FORMAT) : nil
+      # Returns the Time the hit occurred at
+      def time
+        unless @time
+          time_str = @line.slice(TIMESTAMP_REGEXP).gsub(/([0-9]{4}):([0-9]{2})/, "#{$1} #{$2}") rescue nil
+          @time = Time.parse(time_str) rescue nil
+        end
+        @time
       end
     end
 

@@ -3,6 +3,8 @@
 double_agent is a library for parsing browser and operating system info out of user 
 agent strings. It is designed for parsing large sets for review or analysis.
 
+*New in 1.0.0* Helpers for generating pretty graphs!! Requires gruff.
+
 *NOTE* Support for Ruby 1.8.x was dropped after version 0.2.3.
 
 == Installation
@@ -17,7 +19,7 @@ Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
     require 'double_agent'
 
     # Load modules individually
-    require 'double_agent/parser|resources|stats|logs|all'
+    require 'double_agent/parser|resources|stats|logs|graphs|all'
 
 = Parser
 
@@ -99,3 +101,13 @@ can easily calculate browser and/or OS share on your site.
     => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
 
 Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent.
+
+= Graphs
+
+DoubleAgent::Graphs offers several helpers for generating gruff graphs. Here's an example pie chart, using DoubleAgent::Logs as a data source. However, any object that includes DoubleAgent::Resource can be used.
+
+    log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
+
+    DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png', 'Browser Share')
+
+Look at DoubleAgent::Graphs for more graphs and lots more examples.

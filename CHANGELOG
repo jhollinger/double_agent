@@ -6,6 +6,7 @@
 * Add iPhone and iPad
 * Add Kindle, Kindle Fire
 * Add "mobile?" method to detect mobile OS's
+* Add some awesome graph generators (requires gruff)
 * Drop icon methods - they just don't make much sense in the library
 * Drop support for Ruby 1.8
 
