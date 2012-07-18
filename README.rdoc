@@ -13,7 +13,7 @@ agent strings. It is designed for parsing large sets for review or analysis.
 
 == Loading
 
-Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
+Double Agent is broken up into modules - Parser, Resources, Stats, Logs and Graphs.
 
     # Load the core modules (Parser, Resources)
     require 'double_agent'
@@ -72,6 +72,8 @@ It gives that class's objects all of the above methods and more.
 
 Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats::percentages_for.
 
+    require 'tablizer'
+
     logins = Login.all
     p logins.size
     => 1000
@@ -80,13 +82,13 @@ Calculate browser and OS shares for large sets of DoubleAgent::Resource objects 
     p stats
     => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
 
-    stats.each do |browser_family, os_family, percent, real_num|
-      puts "#{browser_family} on #{os_family} - #{percent}% (#{real_num} hits)"
-    end
-    => "Firefox on Windows - 50% (500 hits)"
-    => "Internet Explorer on Windows - 20% (200 hits)"
-    => "Safari on OS X - 20% (200 hits)"
-    => "Firefox on GNU/Linux - 10% (100 hits)"
+    puts Tablizer::Table.new(stats)
+    => +-----------------+------------+----+---+
+       |Firefox          |Windows     |50.0|500|
+       |Internet Explorer|Windows     |20.0|200|
+       |Safari           |OS X        |20.0|200|
+       |Firefox          |GNU/Linux   |10.0|100|
+       +-----------------+------------+----+---+
 
 = Logs
 
