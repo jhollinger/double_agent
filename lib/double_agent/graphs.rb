@@ -17,12 +17,12 @@ module DoubleAgent
     # 
     # Example 1:
     # 
-    #  log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
-    #  DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png', 'Browser Share')
+    #  logs = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
+    #  DoubleAgent::Graphs.pie(logs, :browser_family, '/path/to/browser-share.png', 'Browser Share')
     #
     # Example 2:
     #
-    #  DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png') do |pie|
+    #  DoubleAgent::Graphs.pie(logs, :browser_family, '/path/to/browser-share.png') do |pie|
     #    pie.title = 'Browser Share'
     #    pie.font = '/path/to/font.ttf'
     #    pie.theme = pie.theme_37signals
@@ -30,7 +30,7 @@ module DoubleAgent
     # 
     # Example 3:
     # 
-    #  blob = DoubleAgent::Graphs.pie(log_entries, :browser_family).to_blob
+    #  blob = DoubleAgent::Graphs.pie(logs, :browser_family).to_blob
     #
     def self.pie(objects, stat_method, path=nil, title=nil)
       pie = Gruff::Pie.new
@@ -52,7 +52,8 @@ module DoubleAgent
     # 
     # "y_method" should be a DoubleAgent::Resource method like :browser or :os
     # 
-    # "x_method" should be a DoubleAgent::Logs::Entry::Resource method like :date
+    # "x_method" should be a DoubleAgent::Logs::Entry::Resource method like :date or a lambda that accepts
+    # a "log_entries" member and returns a value for the x axis.
     #
     # Optionally you may pass a file path and graph title. If you pass a file path, the graph will
     # be written to file automatically. Otherwise, you would call "write('/path/to/graph.png')" on the
@@ -64,12 +65,12 @@ module DoubleAgent
     #
     # Example 1:
     # 
-    #  log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
-    #  DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png', 'Browser Share')
+    #  logs = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
+    #  DoubleAgent::Graphs.line(logs, :browser_family, :date, '/path/to/browser-share.png', 'Browser Share')
     #
     # Example 2:
     #
-    #  DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
+    #  DoubleAgent::Graphs.line(logs, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
     #    chart.title = 'Browser Share'
     #    chart.font = '/path/to/font.ttf'
     #    chart.theme = pie.theme_37signals
@@ -77,17 +78,20 @@ module DoubleAgent
     #
     # Example 3:
     #
-    #  DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
+    #  DoubleAgent::Graphs.line(logs, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
     #    chart.title = 'Browser Share'
     #
     #    # Both the 10 and the block are optional.
-    #    #  - "10" means that only every 10'th label will be printed. Otherwise, each date would be printed.
+    #    #  - "10" means that only every 10'th label will be printed. Otherwise, each would be.
     #    #  - The block is passed each label (the return value of "x_method") and may return a formatted version.
-    #    #    Otherwise, to_s will be called.
     #    labeler.call(10) do |date|
     #      date.strftime('%m/%d/%Y')
     #    end
     #  end
+    #
+    # Example 4:
+    #
+    #  DoubleAgent::Graphs.line(logs, :browser_family, ->(e) { e.date.strftime('%m/%Y') }, '/path/to/browser-share.png', 'Browser Share by Month')
     #
     def self.line(log_entries, y_method, x_method, path=nil, title=nil)
       chart = Gruff::Line.new
@@ -107,16 +111,15 @@ module DoubleAgent
         end
       end
 
-      # Build the labels
-      label_every_n, labeler = nil, nil
+      # Build the labeling proc
+      label_every_n, labeler = 1, :to_s.to_proc
       get_labeler = proc do |n=1, &block|
         label_every_n = n
-        labeler = block if block_given?
+        labeler = block if block
       end
       yield(chart, get_labeler) if block_given?
-      labeler ||= lambda { |label| label.to_s }
+      # Build labels and add them to chart
       labels = log_entries_by_x.keys
-      # Add labels to the chart
       chart.labels = Hash[*labels.select { |x| labels.index(x) % label_every_n == 0 }.map { |x| [*labels.index(x), labeler[x]] }.flatten]
 
       # Add data to the chart
