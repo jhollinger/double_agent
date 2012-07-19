@@ -32,11 +32,11 @@ describe DoubleAgent do
       end
 
       it 'should parse datestamps' do
-        @line.on.should == Date.new(2011, 5, 4)
+        @line.date.should == Date.new(2011, 5, 4)
       end
 
       it 'should parse timestamps' do
-        @line.at.should == DateTime.new(2011, 5, 4, 8, 21, 4, '-0400')
+        @line.time.should == Time.new(2011, 5, 4, 8, 21, 4, '-04:00')
       end
     end
   end

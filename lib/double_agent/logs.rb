@@ -60,7 +60,7 @@ module DoubleAgent
       # Returns the Time the hit occurred at
       def time
         unless @time
-          time_str = @line.slice(TIMESTAMP_REGEXP).gsub(/([0-9]{4}):([0-9]{2})/, "#{$1} #{$2}") rescue nil
+          time_str = @line.slice(TIMESTAMP_REGEXP).gsub(/([0-9]{4}):([0-9]{2})/, '\1 \2') rescue nil
           @time = Time.parse(time_str) rescue nil
         end
         @time
