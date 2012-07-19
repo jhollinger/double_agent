@@ -3,7 +3,7 @@
 double_agent is a library for parsing browser and operating system info out of user 
 agent strings. It is designed for parsing large sets for review or analysis.
 
-*New in 1.0.0* Helpers for generating pretty graphs!! Requires gruff.
+*NEW* in 1.0.0: helpers for generating pretty graphs!! See DoubleAgent::Graphs (requires gruff).
 
 *NOTE* Support for Ruby 1.8.x was dropped after version 0.2.3.
 
@@ -13,13 +13,15 @@ agent strings. It is designed for parsing large sets for review or analysis.
 
 == Loading
 
-Double Agent is broken up into modules - Parser, Resources, Stats and Logs.
+Double Agent is broken up into modules - Parser, Resources, Stats, Logs and Graphs.
 
     # Load the core modules (Parser, Resources)
     require 'double_agent'
 
     # Load modules individually
     require 'double_agent/parser|resources|stats|logs|graphs|all'
+
+Read the full documentation at http://jordanhollinger.com/docs/double_agent/
 
 = Parser
 
@@ -72,6 +74,8 @@ It gives that class's objects all of the above methods and more.
 
 Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats::percentages_for.
 
+    require 'tablizer'
+
     logins = Login.all
     p logins.size
     => 1000
@@ -80,13 +84,13 @@ Calculate browser and OS shares for large sets of DoubleAgent::Resource objects 
     p stats
     => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
 
-    stats.each do |browser_family, os_family, percent, real_num|
-      puts "#{browser_family} on #{os_family} - #{percent}% (#{real_num} hits)"
-    end
-    => "Firefox on Windows - 50% (500 hits)"
-    => "Internet Explorer on Windows - 20% (200 hits)"
-    => "Safari on OS X - 20% (200 hits)"
-    => "Firefox on GNU/Linux - 10% (100 hits)"
+    puts Tablizer::Table.new(stats)
+    => +-----------------+------------+----+---+
+       |Firefox          |Windows     |50.0|500|
+       |Internet Explorer|Windows     |20.0|200|
+       |Safari           |OS X        |20.0|200|
+       |Firefox          |GNU/Linux   |10.0|100|
+       +-----------------+------------+----+---+
 
 = Logs
 
@@ -104,10 +108,35 @@ Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent
 
 = Graphs
 
-DoubleAgent::Graphs offers several helpers for generating gruff graphs. Here's an example pie chart, using DoubleAgent::Logs as a data source. However, any object that includes DoubleAgent::Resource can be used.
+DoubleAgent::Graphs offers several helpers for generating gruff graphs.
 
+    # Any objects that includes DoubleAgent::Resource can be used instead
     log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
 
-    DoubleAgent::Graphs.pie(log_entries, :browser_family, '/path/to/browser-share.png', 'Browser Share')
+    # A pie chart of Firefox version shares
+    ff = log_entries.select { |e| e.browser_sym == :firefox }
+    DoubleAgent::Graphs.pie(ff, :browser, '/path/to/ff-version-share.png', 'Firefox Version Share')
+
+    # A line graph of daily browser family share over time, tricked out with lots of options
+    # See http://gruff.rubyforge.org/classes/Gruff/Base.html for more Gruff options
+    DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
+      chart.title = 'Browser Share'
+      chart.font = '/path/to/awesome/font.ttf'
+      chart.theme = {
+        :colors => %w(orange purple green white red),
+        :marker_color => 'blue',
+        :background_colors => %w(black grey)
+      }
+
+      # Only show every 7th label, and make dates pretty
+      labeler.call(7) do |date|
+        date.strftime('%b %e')
+      end
+    end
 
 Look at DoubleAgent::Graphs for more graphs and lots more examples.
+
+== License
+Copyright 2011 Jordan Hollinger
+
+Licensed under the Apache License
