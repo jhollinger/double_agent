@@ -72,7 +72,7 @@ It gives that class's objects all of the above methods and more.
 
 = Stats
 
-Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats::percentages_for.
+Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats.
 
     require 'tablizer'
 
@@ -80,7 +80,11 @@ Calculate browser and OS shares for large sets of DoubleAgent::Resource objects 
     p logins.size
     => 1000
 
-    stats = DoubleAgent::Stats.percentages_for(logins, :browser_family, :os_family)
+    stats = DoubleAgent::Stats.counts(logins, :browser_family)
+    p stats
+    => [["Firefox", 600], ["Internet Explorer", 200], ["Safari", 200]]
+
+    stats = DoubleAgent::Stats.percentages(logins, :browser_family, :os_family)
     p stats
     => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
 
@@ -99,7 +103,7 @@ object. It even reads gzipped logs (requires zlib)! Since the DoubleAgent::Logs:
 can easily calculate browser and/or OS share on your site.
 
     entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
-    stats = DoubleAgent::Stats.percentages_for(entries, :browser)
+    stats = DoubleAgent::Stats.percentages(entries, :browser)
 
     p stats
     => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
@@ -134,7 +138,7 @@ DoubleAgent::Graphs extends DoubleAgent::Stats by adding several helpers for gen
       end
     end
 
-Look at DoubleAgent::Graphs for more graphs and lots more examples.
+Look at DoubleAgent::Graphs for more graphs and examples.
 
 == License
 Copyright 2011 Jordan Hollinger
