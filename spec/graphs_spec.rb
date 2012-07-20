@@ -19,19 +19,24 @@ if defined? Gruff
 
       it 'should write a simple pie chart' do
         DoubleAgent::Stats.percentages(entries, :browser_family).pie_chart(@file_path, 'Browser Share')
-        @md5[@file_path].should == '43c02b8cd360b9b4a2675e2d11eed5ba'
+        @md5[@file_path].should == 'c58e8724efe6f94e421e78a19fd51c6b'
       end
 
       it 'should write a complex pie chart' do
         DoubleAgent::Stats.percentages(entries, :browser_family).pie_chart(@file_path) do |pie|
           pie.title = 'Browser Share'
         end
-        @md5[@file_path].should == '43c02b8cd360b9b4a2675e2d11eed5ba'
+        @md5[@file_path].should == 'c58e8724efe6f94e421e78a19fd51c6b'
       end
 
       it 'should write a simple multiline graph' do
         DoubleAgent::Stats.percentages(entries, :browser_family).line_graph(:date, @file_path, 'Browser Share')
         @md5[@file_path].should == '4eddcafdbdd6b2936bfaade1b72990a6'
+      end
+
+      it 'should write a simple multiline graph using counts instead of percentages' do
+        DoubleAgent::Stats.counts(entries, :browser_family).line_graph(:date, @file_path, 'Browser Share')
+        @md5[@file_path].should == 'b895e0427199791db53667d3465f28ca'
       end
 
       it 'should write a formatted line graph' do
@@ -50,6 +55,23 @@ if defined? Gruff
           chart.theme = chart.theme_odeo
         end
         @md5[@file_path].should == '263562b4e4eacbe283958116c7072c0d'
+      end
+
+      it 'should write a simple bar graph' do
+        DoubleAgent::Stats.counts(entries, :browser_family).bar_chart(@file_path, 'Browser Numbers')
+        @md5[@file_path].should == '9e7c663c9f4f19030508d415bc9a1b04'
+      end
+
+      it 'should write a more complicated bar graph' do
+        DoubleAgent::Stats.counts(entries, :browser_family, :os_family).bar_chart(@file_path) do |chart|
+          chart.title = 'Browser / OS Numbers'
+        end
+        @md5[@file_path].should == 'dd8c34c9459f52db2cc584d6505fbe21'
+      end
+
+      it 'should write a bar graph using percents' do
+        DoubleAgent::Stats.percentages(entries, :browser_family).bar_chart(@file_path, 'Browser % Shares')
+        @md5[@file_path].should == '5dbee13f6b214043724e729de79de00f'
       end
     end
   end

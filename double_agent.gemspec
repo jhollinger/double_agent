@@ -5,11 +5,11 @@ Gem::Specification.new do |spec|
   spec.name = 'double_agent'
   spec.version = DoubleAgent::VERSION
   spec.summary = "Browser User Agent string parser"
-  spec.description = "Browser User Agent string parser with resources, stats, and a log reader"
+  spec.description = "Browser User Agent string parser with resources, stats, log reader, and graph generator"
   spec.authors = ['Jordan Hollinger']
   spec.date = '2011-11-01'
   spec.email = 'jordan@jordanhollinger.com'
-  spec.homepage = 'http://github.com/jhollinger/double_agent'
+  spec.homepage = 'https://github.com/jhollinger/double_agent'
 
   spec.require_paths = ['lib']
   spec.extra_rdoc_files = ['README.rdoc', 'CHANGELOG']

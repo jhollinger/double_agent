@@ -11,12 +11,7 @@ if defined? Gruff
   module DoubleAgent
     module Stats
       class ResultSet
-        include Graphs::LineGraph
-        include Graphs::BarGraph
-      end
-
-      class Percentage < Count
-        include Graphs::PieChart
+        include Graphs
       end
     end
   end
