@@ -42,8 +42,19 @@ describe DoubleAgent do
   end
 
   context 'Stats' do
-    it 'should calculate stats' do
-      stats = DoubleAgent::Stats.percentages_for entries, :browser_family, :os_family
+    it 'should calculate counts' do
+      stats = DoubleAgent::Stats.counts(entries, :browser_family)
+      answer = [["Internet Explorer", 20],
+                ["Android", 19],
+                ["Firefox", 7],
+                ["Safari", 2],
+                ["Chromium", 1],
+                ["Epiphany", 1]]
+      stats.should == answer
+    end
+
+    it 'should calculate percentages' do
+      stats = DoubleAgent::Stats.percentages(entries, :browser_family, :os_family)
       answer = [["Internet Explorer", "Windows", 40.0, 20],
                 ["Android", "Android", 38.0, 19],
                 ["Firefox", "GNU/Linux", 10.0, 5],
@@ -55,7 +66,7 @@ describe DoubleAgent do
     end
 
     it 'should ignore stats below the threshold' do
-      stats = DoubleAgent::Stats.percentages_for entries, :browser_family, :os_family, :threshold => 3.0
+      stats = DoubleAgent::Stats.percentages(entries, :browser_family, :os_family, :threshold => 3.0)
       answer = [["Internet Explorer", "Windows", 40.0, 20],
                 ["Android", "Android", 38.0, 19],
                 ["Firefox", "GNU/Linux", 10.0, 5],

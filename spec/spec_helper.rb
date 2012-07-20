@@ -1,8 +1,9 @@
 require 'rspec'
-require File.dirname(__FILE__) + '/../lib/double_agent/parser'
-require File.dirname(__FILE__) + '/../lib/double_agent/resources'
-require File.dirname(__FILE__) + '/../lib/double_agent/stats'
-require File.dirname(__FILE__) + '/../lib/double_agent/logs'
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib/'
+require 'double_agent/parser'
+require 'double_agent/resources'
+require 'double_agent/stats'
+require 'double_agent/logs'
 
 RSpec.configure do |c|
   c.mock_with :rspec

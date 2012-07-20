@@ -108,18 +108,18 @@ Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent
 
 = Graphs
 
-DoubleAgent::Graphs offers several helpers for generating gruff graphs.
+DoubleAgent::Graphs extends DoubleAgent::Stats by adding several helpers for generating graphs. Requires that the Ruby "gruff" gem be installed.
 
     # Any objects that includes DoubleAgent::Resource can be used instead
-    log_entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
+    logs = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
 
     # A pie chart of Firefox version shares
-    ff = log_entries.select { |e| e.browser_sym == :firefox }
-    DoubleAgent::Graphs.pie(ff, :browser, '/path/to/ff-version-share.png', 'Firefox Version Share')
+    ff = logs.select { |e| e.browser_sym == :firefox }
+    DoubleAgent::Stats.percentages(ff, :browser).pie_chart('/path/to/ff-version-share.png', 'Firefox Version Share')
 
-    # A line graph of daily browser family share over time, tricked out with lots of options
+    # A line graph of daily browser family numbers over time, tricked out with lots of options
     # See http://gruff.rubyforge.org/classes/Gruff/Base.html for more Gruff options
-    DoubleAgent::Graphs.line(log_entries, :browser_family, :date, '/path/to/browser-share.png') do |chart, labeler|
+    DoubleAgent::Stats.counts(logs, :browser_family).line_graph(:date, '/path/to/browser-share.png') do |chart, labeler|
       chart.title = 'Browser Share'
       chart.font = '/path/to/awesome/font.ttf'
       chart.theme = {

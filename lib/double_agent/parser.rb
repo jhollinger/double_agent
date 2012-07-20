@@ -1,21 +1,7 @@
-require 'double_agent/parsers/browser'
-require 'double_agent/parsers/os'
+require 'double_agent/lib/parsers'
 require 'double_agent/resources'
-require 'psych'
 
 module DoubleAgent
-  # An array of "browser knowledge hashes," the basis of browser parsing. You may edit this data and call load_browsers! to customize parsing.
-  BROWSER_DATA = Psych.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
-
-  # An array of "OS knowledge hashes," the basis of OS parsing. You may edit this data and call load_oses! to customize parsing.
-  OS_DATA = Psych.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
-
-  # An array of BrowserParser objects created from the data in BROWSER_DATA.
-  BROWSERS = {}
-
-  # An array of OSParser objects created from the data in OS_DATA.
-  OSES = {}
-
   # Returns a new UserAgent object
   def self.parse(user_agent_string)
     UserAgent.new(user_agent_string)
@@ -87,32 +73,6 @@ module DoubleAgent
   # Returns the correct OSParser for the given user agent or symbol
   def self.os_parser(ua_or_sym)
     OSES[ua_or_sym.is_a?(Symbol) ? ua_or_sym : os_sym(ua_or_sym)]
-  end
-
-  # Parses BROWSER_DATA into BROWSERS, a hash of BrowserParser objects indexed by their symbol names.
-  # Parses and evals BROWSER_DATA into a case statement inside of the browser_sym method.
-  def self.load_browsers!
-    BROWSERS.clear
-    str = "case user_agent.to_s\n"
-    BROWSER_DATA.each do |data|
-      BROWSERS[data[:sym]] = Parsers::Browser.new(data)
-      str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
-    end
-    str << 'end'
-    module_eval "def self.browser_sym(user_agent); #{str}; end"
-  end
-
-  # Parses OS_DATA into OSES, a hash of OSParser objects indexed by their symbol names.
-  # Parses and evals OS_DATA into a case statement inside of the os_sym method.
-  def self.load_oses!
-    OSES.clear
-    str = "case user_agent.to_s\n"
-    OS_DATA.each do |data|
-      OSES[data[:sym]] = Parsers::OS.new(data)
-      str << "  when %r{#{data[:regex]}}i then :#{data[:sym]}\n"
-    end
-    str << 'end'
-    module_eval "def self.os_sym(user_agent); #{str}; end"
   end
 end
 

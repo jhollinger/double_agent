@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
-begin
-  require File.dirname(__FILE__) + '/../lib/double_agent/graphs'
-  require 'digest/md5'
-rescue LoadError
-  $stderr.puts "NOTICE \"gruff\" is not available; graphing module tests will be skipped"
-end
+require 'double_agent/graphs'
+require 'digest/md5'
 
 if defined? Gruff
   log_glob = File.dirname(__FILE__) + '/data/*.access.log*'
