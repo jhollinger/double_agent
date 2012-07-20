@@ -80,15 +80,15 @@ Calculate browser and OS shares for large sets of DoubleAgent::Resource objects 
     p logins.size
     => 1000
 
-    stats = DoubleAgent::Stats.counts(logins, :browser_family)
-    p stats
+    counts = DoubleAgent::Stats.counts(logins, :browser_family)
+    p counts.to_a
     => [["Firefox", 600], ["Internet Explorer", 200], ["Safari", 200]]
 
-    stats = DoubleAgent::Stats.percentages(logins, :browser_family, :os_family)
-    p stats
+    percentages = DoubleAgent::Stats.percentages(logins, :browser_family, :os_family)
+    p percentages.to_a
     => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
 
-    puts Tablizer::Table.new(stats)
+    puts Tablizer::Table.new(percentages.to_a)
     => +-----------------+------------+----+---+
        |Firefox          |Windows     |50.0|500|
        |Internet Explorer|Windows     |20.0|200|
@@ -105,7 +105,7 @@ can easily calculate browser and/or OS share on your site.
     entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
     stats = DoubleAgent::Stats.percentages(entries, :browser)
 
-    p stats
+    p stats.to_a
     => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
 
 Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent.
