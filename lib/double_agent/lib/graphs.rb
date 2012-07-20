@@ -1,9 +1,3 @@
-begin
-  require 'gruff'
-rescue LoadError
-  $stderr.puts "ERROR \"gruff\" is not available; graphing module cannot be loaded"
-end
-
 module DoubleAgent
   # Extends the DoubleAgent::Stats module with chart generators. Requires the Ruby "gruff" gem.
   module Graphs

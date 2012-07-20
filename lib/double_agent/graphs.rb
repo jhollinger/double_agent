@@ -1,7 +1,13 @@
-require 'double_agent/stats'
-require 'double_agent/lib/graphs'
+begin
+  require 'gruff'
+rescue LoadError
+  $stderr.puts "ERROR \"gruff\" is not available; graphing module cannot be loaded"
+end
 
 if defined? Gruff
+  require 'double_agent/stats'
+  require 'double_agent/lib/graphs'
+
   module DoubleAgent
     module Stats
       class ResultSet
@@ -12,9 +18,6 @@ if defined? Gruff
       class Percentage < Count
         include Graphs::PieChart
       end
-    end
-
-    module Graphs
     end
   end
 end
