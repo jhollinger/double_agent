@@ -18,24 +18,24 @@ if defined? Gruff
       end
 
       it 'should write a simple pie chart' do
-        DoubleAgent::Graphs.pie(entries, :browser_family, @file_path, 'Browser Share')
-        @md5[@file_path].should == 'c58e8724efe6f94e421e78a19fd51c6b'
+        DoubleAgent::Stats.percentages(entries, :browser_family).pie_chart(@file_path, 'Browser Share')
+        @md5[@file_path].should == '43c02b8cd360b9b4a2675e2d11eed5ba'
       end
 
       it 'should write a complex pie chart' do
-        DoubleAgent::Graphs.pie(entries, :browser_family, @file_path) do |pie|
+        DoubleAgent::Stats.percentages(entries, :browser_family).pie_chart(@file_path) do |pie|
           pie.title = 'Browser Share'
         end
-        @md5[@file_path].should == 'c58e8724efe6f94e421e78a19fd51c6b'
+        @md5[@file_path].should == '43c02b8cd360b9b4a2675e2d11eed5ba'
       end
 
       it 'should write a simple multiline graph' do
-        DoubleAgent::Graphs.line(entries, :browser_family, :date, @file_path, 'Browser Share')
+        DoubleAgent::Stats.percentages(entries, :browser_family).line_graph(:date, @file_path, 'Browser Share')
         @md5[@file_path].should == '4eddcafdbdd6b2936bfaade1b72990a6'
       end
 
       it 'should write a formatted line graph' do
-        DoubleAgent::Graphs.line(entries, :browser_family, :date, @file_path, 'Browser Share') do |chart, labeler|
+        DoubleAgent::Stats.percentages(entries, :browser_family).line_graph(:date, @file_path, 'Browser Share') do |chart, labeler|
           chart.theme = chart.theme_odeo
 
           labeler.call(2) do |date|
@@ -46,7 +46,7 @@ if defined? Gruff
       end
 
       it 'should write a monthly line graph' do
-        DoubleAgent::Graphs.line(entries, :browser_family, ->(e) { e.date.strftime('%m/%Y') }, @file_path, 'Browser Share') do |chart, labeler|
+        DoubleAgent::Stats.percentages(entries, :browser_family).line_graph(->(e) { e.date.strftime('%m/%Y') }, @file_path, 'Browser Share') do |chart, labeler|
           chart.theme = chart.theme_odeo
         end
         @md5[@file_path].should == '263562b4e4eacbe283958116c7072c0d'

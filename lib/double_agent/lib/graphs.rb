@@ -97,20 +97,20 @@ module DoubleAgent
       #
       #  DoubleAgent::Stats.percentages(logs, :os_family, :browser_family).line_graph(->(l) { l.date.strftime('%m/%Y') }, '/path/to/os-browser-share.png', 'OS / Browser Share by Month')
       #
-      def self.line_graph(x_method, path=nil, title=nil)
+      def line_graph(x_method, path=nil, title=nil)
         chart = Gruff::Line.new
         chart.title = title unless title.nil?
 
         # Create an empty array for each group (e.g. {"Firefox" => [], "Safari" => []})
         data = resources.map { |r| attributes.map { |attr| r.send(attr) } }.uniq.inject({}) do |dat, attrs|
-          dat[name] = []
+          dat[attrs] = []
           dat
         end
 
         # Group the data on the x axis
         resources_by_x = resources.group_by(&x_method)
-        for group in resources_by_x.sort_by(&:first).values
-          stats = self.class.new(group, *attributes).group_by { |result| result[0..attributes.size] }
+        for group in resources_by_x.sort_by(&:first).map(&:last)
+          stats = self.class.new(group, *attributes).group_by { |result| result[0..attributes.size-1] }
           # Record how many from each group (e.g. Firefox, Safari) fall on this point of the x axis (e.g. date)
           for attrs, dat in data
             dat << (stats[attrs] ? stats[attrs][0][1] : 0)

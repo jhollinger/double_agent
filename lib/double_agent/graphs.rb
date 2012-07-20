@@ -9,7 +9,7 @@ if defined? Gruff
         include Graphs::BarGraph
       end
 
-      class Percentage < ResultSet
+      class Percentage < Count
         include Graphs::PieChart
       end
     end
