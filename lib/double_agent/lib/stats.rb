@@ -23,26 +23,26 @@ module DoubleAgent
 
       # Implements the "each" method required by Enumerable.
       def each(&block)
-        calculate!
+        lazy_calculate!
         @results.each &block
       end
 
       # Tests equality between this and another set
       def ==(other)
-        calculate!
+        lazy_calculate!
         @results == other.to_a
       end
 
       # Tests equality between this and another set
       def ===(other)
-        calculate!
+        lazy_calculate!
         @results === other.to_a
       end
 
       private
 
       # Run the calculation if it hasn't already been
-      def deferred_calculate!
+      def lazy_calculate!
         calculate! if @results.empty?
       end
     end
