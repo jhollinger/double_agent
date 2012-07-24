@@ -71,7 +71,7 @@ It returns an array of DoubleAgent::LogEntry classes, which mixes in DoubleAgent
 
     # Use a tool like Graphene to calculate stats
     puts Graphene.percentages(entries, :browser)
-    => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
+    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
 
 Check out the DoubleAgent::LogEntry class for more methods besides user_agent.
 
