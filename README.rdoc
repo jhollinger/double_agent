@@ -3,27 +3,16 @@
 double_agent is a library for parsing browser and operating system info out of user 
 agent strings. It is designed for parsing large sets for review or analysis.
 
-*NEW* in 1.0.0: helpers for generating pretty graphs!! See DoubleAgent::Graphs (requires gruff).
-
-*NOTE* Support for Ruby 1.8.x was dropped after version 0.2.3.
+*NOTE* Support for Ruby 1.8 was dropped after version 0.2.3.
 
 == Installation
 
-    gem install double_agent
-
-== Loading
-
-Double Agent is broken up into modules - Parser, Resources, Stats, Logs and Graphs.
-
-    # Load the core modules (Parser, Resources)
-    require 'double_agent'
-
-    # Load modules individually
-    require 'double_agent/parser|resources|stats|logs|graphs|all'
+    [sudo] gem install double_agent
+    # Or add "double_agent" to your Gemfile
 
 Read the full documentation at http://jordanhollinger.com/docs/double_agent/
 
-= Parser
+== Parser
 
     user_agent = DoubleAgent.parse("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")
 
@@ -47,9 +36,9 @@ Read the full documentation at http://jordanhollinger.com/docs/double_agent/
     DoubleAgent.browser("Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) Ubuntu/12.04 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19")
     => "Chrome 18"
 
-See the DoubleAgent module for more.
+See the DoubleAgent module for more info.
 
-= Resources
+== Resources
 
 DoubleAgent::Resource is a mix-in for objects with a user_agent method.
 It gives that class's objects all of the above methods and more.
@@ -70,75 +59,25 @@ It gives that class's objects all of the above methods and more.
     login.os_family
     => "OS X"
 
-= Stats
+See the DoubleAgent::Resource module for more info.
 
-Calculate browser and OS shares for large sets of DoubleAgent::Resource objects with DoubleAgent::Stats.
+== Logs
 
-    require 'tablizer'
+DoubleAgent includes a small log parser, for parsing user agent strings out of http server access logs. It even reads gzipped logs (requires zlib)!
+It returns an array of DoubleAgent::LogEntry classes, which mixes in DoubleAgent::Resource.
 
-    logins = Login.all
-    p logins.size
-    => 1000
+    # Parse the logs
+    entries = DoubleAgent.logs("/var/log/nginx/my-site.access.log*")
 
-    counts = DoubleAgent::Stats.counts(logins, :browser_family)
-    p counts.to_a
-    => [["Firefox", 600], ["Internet Explorer", 200], ["Safari", 200]]
-
-    percentages = DoubleAgent::Stats.percentages(logins, :browser_family, :os_family)
-    p percentages.to_a
-    => [["Firefox", "Windows", 50.0, 500], ["Internet Explorer", "Windows", 20.0, 200], ["Safari", "OS X", 20.0, 200], ["Firefox", "GNU/Linux", 10.0, 100]]
-
-    puts Tablizer::Table.new(percentages.to_a)
-    => +-----------------+------------+----+---+
-       |Firefox          |Windows     |50.0|500|
-       |Internet Explorer|Windows     |20.0|200|
-       |Safari           |OS X        |20.0|200|
-       |Firefox          |GNU/Linux   |10.0|100|
-       +-----------------+------------+----+---+
-
-= Logs
-
-DoubleAgent::Logs::entries parses through Apache and Nginx access logs, instantiating each log line into a DoubleAgent::Logs::Entry
-object. It even reads gzipped logs (requires zlib)! Since the DoubleAgent::Logs::Entry class mixes in DoubleAgent::Resource, you
-can easily calculate browser and/or OS share on your site.
-
-    entries = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
-    stats = DoubleAgent::Stats.percentages(entries, :browser)
-
-    p stats.to_a
+    # Use a tool like Graphene to calculate stats
+    puts Graphene.percentages(entries, :browser)
     => [["Firefox 4", 20.0, 650], ["Internet Explorer 8", 18.0, 587], ...]
 
-Check out the DoubleAgent::Logs::Entry class for more methods besides user_agent.
+Check out the DoubleAgent::LogEntry class for more methods besides user_agent.
 
-= Graphs
+== Where did stats go?
 
-DoubleAgent::Graphs extends DoubleAgent::Stats by adding several helpers for generating graphs. Requires that the Ruby "gruff" gem be installed.
-
-    # Any objects that includes DoubleAgent::Resource can be used instead
-    logs = DoubleAgent::Logs.entries("/var/log/nginx/my-site.access.log*")
-
-    # A pie chart of Firefox version shares
-    ff = logs.select { |e| e.browser_sym == :firefox }
-    DoubleAgent::Stats.percentages(ff, :browser).pie_chart('/path/to/ff-version-share.png', 'Firefox Version Share')
-
-    # A line graph of daily browser family numbers over time, tricked out with lots of options
-    # See http://gruff.rubyforge.org/classes/Gruff/Base.html for more Gruff options
-    DoubleAgent::Stats.counts(logs, :browser_family).line_graph(:date, '/path/to/browser-share.png') do |chart, labeler|
-      chart.title = 'Browser Share'
-      chart.font = '/path/to/awesome/font.ttf'
-      chart.theme = {
-        :colors => %w(orange purple green white red),
-        :marker_color => 'blue',
-        :background_colors => %w(black grey)
-      }
-
-      # Only show every 7th label, and make dates pretty
-      labeler.call(7) do |date|
-        date.strftime('%b %e')
-      end
-    end
-
-Look at DoubleAgent::Graphs for more graphs and examples.
+As of version 1.0.0, double_agent underwent a downsizing. Stats were dropped and moved to their own more generic gem called Graphene. More info at https://github.com/jhollinger/graphene.
 
 == License
 Copyright 2011 Jordan Hollinger

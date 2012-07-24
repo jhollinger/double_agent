@@ -1,13 +1,14 @@
 == Release 1.0.0 (?) ==
 
 * Changes to parser API
-* Add some awesome graph generators (requires gruff)
 * Add "mobile?" method to detect mobile OS's
 * Android's browser isn't part of the Chromium family
 * Android OS isn't part of the GNU/Linux family
 * iOS isn't part of the OS X family
 * Add iPhone and iPad
 * Add Kindle, Kindle Fire
+* Refactor the Logs module
+* Drop Stats module (use the "graphene" gem instead)
 * Drop icon methods - they just don't make much sense in the library
 * Drop support for Ruby 1.8
 
