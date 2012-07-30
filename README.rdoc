@@ -63,7 +63,7 @@ See the DoubleAgent::Resource module for more info.
 
 == Logs
 
-DoubleAgent includes a small log parser, for parsing user agent strings out of http server access logs. It even reads gzipped logs (requires zlib)!
+DoubleAgent includes a small log parser, for parsing user agent strings out of http server access logs. It even reads gzipped logs!
 It returns an array of DoubleAgent::LogEntry classes, which mixes in DoubleAgent::Resource.
 
     # Parse the logs

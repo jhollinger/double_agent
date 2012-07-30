@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.name = 'double_agent'
   spec.version = DoubleAgent::VERSION
   spec.summary = "Browser User Agent string parser"
-  spec.description = "Browser User Agent string parser with resources, stats, log reader, and graph generator"
+  spec.description = "Browser User Agent string parser, includes a log parser and user agent parser mix-in"
   spec.authors = ['Jordan Hollinger']
   spec.date = '2011-11-01'
   spec.email = 'jordan@jordanhollinger.com'
