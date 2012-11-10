@@ -4,9 +4,19 @@ module DoubleAgent
   # may include this module to easily parse out Browser and OS info.
   # 
   module Resource
-    # Return's this object's browser name
+    # Return's this object's browser name and version
     def browser
       _browser_parser.browser(user_agent)
+    end
+
+    # Return's this object's browser name
+    def browser_name
+      _browser_parser.name
+    end
+
+    # Return's this object's browser version (if any)
+    def browser_version
+      _browser_parser.version(user_agent)
     end
 
     # Return's this object's browser symbol name

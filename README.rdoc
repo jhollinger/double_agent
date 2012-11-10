@@ -61,23 +61,9 @@ It gives that class's objects all of the above methods and more.
 
 See the DoubleAgent::Resource module for more info.
 
-== Logs
+== Where did stats and logs go?
 
-DoubleAgent includes a small log parser, for parsing user agent strings out of http server access logs. It even reads gzipped logs!
-It returns an array of DoubleAgent::LogEntry classes, which mixes in DoubleAgent::Resource.
-
-    # Parse the logs
-    entries = DoubleAgent.logs("/var/log/nginx/my-site.access.log*")
-
-    # Use a tool like Graphene to calculate stats
-    puts Graphene.percentages(entries, :browser)
-    => [["Firefox 4", 20.0], ["Internet Explorer 8", 18.0], ...]
-
-Check out the DoubleAgent::LogEntry class for more methods besides user_agent.
-
-== Where did stats go?
-
-As of version 1.0.0, double_agent underwent a downsizing. Stats were dropped and moved to their own more generic gem called Graphene. More info at https://github.com/jhollinger/graphene.
+As of version 1.0.0, double_agent underwent a downsizing. Stats were dropped and moved to their own more generic gem called Graphene. More info at https://github.com/jhollinger/graphene. Logs were also dropped; there are several HTTP log parsers for Ruby, including http-log-parser and Beaver.
 
 == License
 Copyright 2011 Jordan Hollinger

@@ -109,9 +109,9 @@ describe DoubleAgent do
   end
 
   # Epiphany
-  it 'should be Epiphany on GNU/Linux' do
+  it 'should be Epiphany 3 on GNU/Linux' do
     ua = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.22+ (KHTML, like Gecko) Chromium/17.0.963.56 Chrome/17.0.963.56 Safari/535.22+ Ubuntu/12.04 (3.4.1-0ubuntu1) Epiphany/3.4.1"
-    "#{DA.browser ua} on #{DA.os ua}".should == 'Epiphany on Ubuntu'
+    "#{DA.browser ua} on #{DA.os ua}".should == 'Epiphany 3 on Ubuntu'
   end
 
   # Konqueror

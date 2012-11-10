@@ -1,70 +1,69 @@
 # The ordering is very important; matches are performed in the specified order.
 # This allows for greatly simplified regexes.
 
-- :name: Internet Explorer %s
-  :sym: :msie
+:msie:
+  :name: Internet Explorer
   :regex: msie \d+
   :version: (?<=msie )[0-9]+
 
-- :name: Epiphany
-  :sym: :epiphany
+:epiphany:
+  :name: Epiphany
   :regex: epiphany
   :version: (?<=epiphany/)[0-9]+
 
-- :name: Chrome %s
-  :sym: :chrome
+:chrome:
+  :name: Chrome
   :family_sym: :chromium
   :regex: chrome/\d+
   :version: (?<=chrome/)[0-9]+
 
-- :name: Chromium %s
-  :sym: :chromium
+:chromium:
+  :name: Chromium
   :regex: chromium/\d+
   :version: (?<=chromium/)[0-9]+
 
-- :name: Opera %s
-  :sym: :opera
+:opera:
+  :name: Opera
   :regex: opera
   :version: ((?<=version/)[0-9]+)|((?<=opera )[0-9]+)
 
-- :name: Firefox %s
-  :sym: :firefox
+:firefox:
+  :name: Firefox
   :regex: firefox
   :version: (?<=firefox/)[0-9]+
 
-- :name: Kindle Fire (Silk)
-  :sym: :kindle_fire_silk
+:kindle_fire_silk:
+  :name: Kindle Fire (Silk)
   :family_sym: :kindle
   :regex: silk-accelerated
 
-- :name: Kindle Fire
-  :sym: :kindle_fire
+:kindle_fire:
+  :name: Kindle Fire
   :family_sym: :kindle
   :regex: kindle fire
 
-- :name: Kindle
-  :sym: :kindle
+:kindle:
+  :name: Kindle
   :regex: kindle
 
-- :name: Android %s
-  :sym: :android
+:android:
+  :name: Android
   :regex: android
   :version: (?<=android )[0-9]+(\.[0-9]+)?
 
-- :name: BlackBerry
-  :sym: :blackberry
+:blackberry:
+  :name: BlackBerry
   :regex: blackberry
 
-- :name: Safari %s
-  :sym: :safari
+:safari:
+  :name: Safari
   :regex: safari
   :version: (?<=version/)[0-9]+
 
-- :name: Konqueror
-  :sym: :konqueror
+:konqueror:
+  :name: Konqueror
   :regex: konqueror
 
-- :name: Unknown
-  :sym: :unknown
+:unknown:
+  :name: Unknown
   :regex: .*
-  :version: .*

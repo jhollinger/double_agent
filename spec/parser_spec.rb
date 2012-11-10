@@ -14,6 +14,16 @@ describe DoubleAgent do
       DoubleAgent.browser('froofroo').should == 'Unknown'
     end
 
+    #browser_name
+    it 'returns Firefox for browser_name' do
+      DoubleAgent.browser_name(@ua_string).should == 'Firefox'
+    end
+
+    #browser_version
+    it 'returns 4 for browser_version' do
+      DoubleAgent.browser_version(@ua_string).should == '4'
+    end
+
     #browser_sym
     it 'returns :firefox for browser_sym' do
       DoubleAgent.browser_sym(@ua_string).should == :firefox

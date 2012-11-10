@@ -1,98 +1,98 @@
-- :name: Windows 8
-  :sym: :windows_8
+:windows_8:
+  :name: Windows 8
   :family_sym: :windows
   :regex: windows nt 6\.2
 
-- :name: Windows 7
-  :sym: :windows_7
+:windows_7:
+  :name: Windows 7
   :family_sym: :windows
   :regex: windows nt 6\.1
 
-- :name: Windows Vista
-  :sym: :windows_vista
+:windows_vista:
+  :name: Windows Vista
   :family_sym: :windows
   :regex: windows nt 6\.0
 
-- :name: Windows XP
-  :sym: :windows_xp
+:windows_xp:
+  :name: Windows XP
   :family_sym: :windows
   :regex: windows nt 5\.[12]
 
-- :name: Windows
-  :sym: :windows
+:windows:
+  :name: Windows
   :regex: windows
 
-- :name: Kindle Fire
-  :sym: :kindle_fire
+:kindle_fire:
+  :name: Kindle Fire
   :family_sym: :kindle
   :regex: (kindle fire)|(silk-accelerated)
   :mobile: true
 
-- :name: Kindle
-  :sym: :kindle
+:kindle:
+  :name: Kindle
   :regex: kindle
   :mobile: true
 
-- :name: iPod
-  :sym: :ipod
+:ipod:
+  :name: iPod
   :family_sym: :ios
   :regex: \(ipod;
   :mobile: true
 
-- :name: iPhone
-  :sym: :iphone
+:iphone:
+  :name: iPhone
   :family_sym: :ios
   :regex: \(iphone;
   :mobile: true
 
-- :name: iPad
-  :sym: :ipad
+:ipad:
+  :name: iPad
   :family_sym: :ios
   :regex: \(ipad;
   :mobile: true
 
-- :name: iOS
-  :sym: :ios
+:ios:
+  :name: iOS
   :regex: \(i\w+; .* like mac os x;
   :mobile: true
 
-- :name: OS X
-  :sym: :osx
+:osx:
+  :name: OS X
   :regex: macintosh
 
-- :name: Android
-  :sym: :android
+:android:
+  :name: Android
   :regex: android
   :mobile: true
 
-- :name: Ubuntu
-  :sym: :ubuntu
+:ubuntu:
+  :name: Ubuntu
   :family_sym: :linux
   :regex: ubuntu
 
-- :name: Fedora
-  :sym: :fedora
+:fedora:
+  :name: Fedora
   :family_sym: :linux
   :regex: fedora
 
-- :name: Slackware
-  :sym: :slackware
+:slackware:
+  :name: Slackware
   :family_sym: :linux
   :regex: slackware
 
-- :name: GNU/Linux
-  :sym: :linux
+:linux:
+  :name: GNU/Linux
   :regex: linux
 
-- :name: FreeBSD
-  :sym: :freebsd
+:freebsd:
+  :name: FreeBSD
   :regex: freebsd
 
-- :name: BlackBerry
-  :sym: :blackberry
+:blackberry:
+  :name: BlackBerry
   :regex: blackberry
   :mobile: true
 
-- :name: Unknown
-  :sym: :unknown
+:unknown:
+  :name: Unknown
   :regex: .*
