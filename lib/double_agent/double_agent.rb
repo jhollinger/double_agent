@@ -15,6 +15,15 @@ module DoubleAgent
     UserAgent.new(user_agent_string)
   end
 
+  # Mix DoubleAgent::Resource into klass. If klass doesn't already have a user_agent method,
+  # you may pass a block which will be used to define one.
+  def self.resource(klass, &user_agent_block)
+    klass.class_eval do
+      define_method :user_agent, &user_agent_block
+    end if user_agent_block
+    klass.send :include, DoubleAgent::Resource
+  end
+
   # Forwards calls to a UserAgent object
   def self.method_missing(method, *args, &block)
     parse(args.first).send(method)

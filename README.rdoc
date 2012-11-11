@@ -65,6 +65,16 @@ It gives that class's objects all of the above methods and more.
     login.os_family
     => "OS X"
 
+Or if this is easier:
+
+    DoubleAgent.resource Login
+
+Or if Login didn't have a method called user_agent, but had one called useragent:
+
+    DoubleAgent.resource Login do
+      useragent
+    end
+
 See the DoubleAgent::Resource module for more info.
 
 == Where did stats and logs go?
