@@ -1,71 +1,60 @@
+# A browser user agent string parser. Use DoubleAgent.parse(user_agent) to return a DoubleAgent::UserAgent object, which you can 
+# query with methods like "browser_name" or "os". The DoubleAgent module itself responds to those same method - just
+# pass the user agent string as an argument.
 module DoubleAgent
+  # A hash of browser data, the basis for browser parsing. You may edit this data and call load_browsers! to customize parsing.
+  BROWSER_DATA = Psych.load_file(File.expand_path('../../../data/browsers.yml', __FILE__))
+
+  # A hash of OS hashes, the basis for OS parsing. You may edit this data and call load_oses! to customize parsing.
+  OS_DATA = Psych.load_file(File.expand_path('../../../data/oses.yml', __FILE__))
+
+  BROWSER_PARSERS, OS_PARSERS = {}, {} # :nodoc:
+
   # Returns a new UserAgent object
   def self.parse(user_agent_string)
     UserAgent.new(user_agent_string)
   end
 
-  # Returns the browser's name, possibly including the version number, e.g. "Chrome 12"
-  def self.browser(ua)
-    parse(ua).browser
+  # Forwards calls to a UserAgent object
+  def self.method_missing(method, *args, &block)
+    parse(args.first).send(method)
   end
 
-  # Returns the browser's name
-  def self.browser_name(ua)
-    parse(ua).browser_name
+  # Transforms BROWSER_DATA into a case statement inside of the _browser_sym method
+  def self.load_browsers!
+    BROWSER_PARSERS.clear.merge! Hash[BROWSER_DATA.map { |sym, data| [sym, BrowserParser.new(sym, data)] }]
+
+    module_eval <<-CODEZ
+      def self._browser_sym(user_agent)
+        case user_agent.to_s
+          #{BROWSER_DATA.map { |sym, data| "when %r{#{data[:regex]}}i then :\"#{sym}\"" }.join("\n")}
+        end
+      end
+    CODEZ
   end
 
-  # Returns the browser's name, possibly including the version number, e.g. "Chrome 12"
-  def self.browser_version(ua)
-    parse(ua).browser_version
+  # Transforms OS_DATA into a case statement inside of the _os_sym method
+  def self.load_oses!
+    OS_PARSERS.clear.merge! Hash[OS_DATA.map { |sym, data| [sym, OSParser.new(sym, data)] }]
+
+    module_eval <<-CODEZ
+      def self._os_sym(user_agent)
+        case user_agent.to_s
+          #{OS_DATA.map { |sym, data| "when %r{#{data[:regex]}}i then :\"#{sym}\"" }.join("\n")}
+        end
+      end
+    CODEZ
   end
 
-  # Returns the browser's symbol name, e.g. :chrome
-  def self.browser_sym(user_agent)
-    _browser_sym(user_agent)
-  end
-
-  # Returns the browser's family name, e.g. "Chromium"
-  def self.browser_family(ua)
-    browser_parser(ua).family.browser
-  end
-
-  # Returns the browser's family's symbol name, e.g. :chromium
-  def self.browser_family_sym(ua)
-    browser_parser(ua).family_sym
-  end
-
-  # Returns the OS's name, e.g. "Ubuntu"
-  def self.os(ua)
-    os_parser(ua).os
-  end
-
-  # Returns the OS's symbol name, e.g. :ubuntu
-  def self.os_sym(user_agent)
-    _os_sym(user_agent)
-  end
-
-  # Returns the OS's family, e.g. "GNU/Linux"
-  def self.os_family(ua)
-    os_parser(ua).family.os
-  end
-
-  # Returns the OS's family's symbol name, e.g. :linux
-  def self.os_family_sym(ua)
-    os_parser(ua).family_sym
-  end
-
-  # Returs true if the browser appears to be on a mobile device, false if not
-  def self.mobile?(ua)
-    os_parser(ua).mobile?
-  end
+  private
 
   # Returns the correct BrowerParser for the given user agent or symbol
   def self.browser_parser(ua_or_sym)
-    BROWSER_PARSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : browser_sym(ua_or_sym)]
+    BROWSER_PARSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : _browser_sym(ua_or_sym)]
   end
 
   # Returns the correct OSParser for the given user agent or symbol
   def self.os_parser(ua_or_sym)
-    OS_PARSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : os_sym(ua_or_sym)]
+    OS_PARSERS[ua_or_sym.is_a?(Symbol) ? ua_or_sym : _os_sym(ua_or_sym)]
   end
 end

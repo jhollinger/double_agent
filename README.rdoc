@@ -19,6 +19,12 @@ Read the full documentation at http://jordanhollinger.com/docs/double_agent/
     user_agent.browser
     => "Chrome 18"
 
+    user_agent.browser_name
+    => "Chrome"
+
+    user_agent.browser_version
+    => "18"
+
     user_agent.browser_family
     => "Chromium"
 
