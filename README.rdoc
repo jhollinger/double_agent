@@ -65,17 +65,19 @@ It gives that class's objects all of the above methods and more.
     login.os_family
     => "OS X"
 
-Or if this is easier:
-
-    DoubleAgent.resource Login
-
-Or if Login didn't have a method called user_agent, but had one called useragent:
-
-    DoubleAgent.resource Login do
-      useragent
-    end
-
 See the DoubleAgent::Resource module for more info.
+
+== Mixing into third-party code
+
+If you want to mix DoubleAgent::Resource into some third-party code, you may find this helpful:
+
+    DoubleAgent.resource SomeHttpLogParser::LogEntry
+
+If SomeHttpLogParser::LogEntry doesn't already have a user_agent method, do this:
+
+    DoubleAgent.resource SomeHttpLogParser::LogEntry do
+      # some code to return the user agent string
+    end
 
 == Where did stats and logs go?
 
